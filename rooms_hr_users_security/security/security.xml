@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+
+
+        <record model="res.groups" id="employee_create_button" >
+                <field name="name">Hide Employee Create Button</field>
+        </record>
+
+        <record model="res.groups" id="contract_create_button" >
+                <field name="name">Hide Contract Create Button</field>
+        </record>
+
+         <record model="res.groups" id="mytimeoff_create_button" >
+                <field name="name">Hide My Timesheet Create Button</field>
+        </record>
+
+         <record model="res.groups" id="caretaker_timeoff_create_button" >
+                <field name="name">Hide Caretaker Timesheet Create Button</field>
+        </record>
+
+
+        <record model="res.groups" id="room_chartgroup_recruitment" >
+                <field name="name">Room User</field>
+        </record>
+
+
+            <record id="room_chart_management.rooms_setup" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('room_chartgroup_recruitment')])]"/>
+            </record>
+
+
+         <record model="res.groups" id="hr_usergroup_recruitment" >
+                <field name="name">HR User</field>
+        </record>
+
+        <!--everyone-->
+
+
+         <record id="hr_holidays.menu_hr_holidays_dashboard" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--managers-->
+
+         <record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--reporting-->
+
+         <record id="hr_holidays.menu_hr_holidays_report" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--configurations-->
+
+
+         <record id="hr_holidays.menu_hr_holidays_configuration" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--hr_holidays.hr_leave_menu_new_request-->
+
+        <!--payment advice-->
+
+        <record id="l10n_in_hr_payroll.hr_menu_payment_advice" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+
+        <!--employee-->
+
+
+        <record id="hr_payroll.menu_hr_payroll_employees_root" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+
+        <!--payslip-->
+
+        <record id="hr_payroll.menu_hr_payroll_payslips" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--reporting-->
+
+        <record id="hr_payroll.menu_hr_payroll_report" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+        <!--configurations-->
+
+        <record id="hr_payroll.menu_hr_payroll_configuration" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('hr_usergroup_recruitment')])]"/>
+            </record>
+
+
+    </data>
+</odoo>
