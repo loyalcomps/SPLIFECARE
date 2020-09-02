@@ -3,19 +3,19 @@
 
 
         <record model="res.groups" id="employee_create_button" >
-                <field name="name">Hide Employee Create Button</field>
+                <field name="name">Hide Employee Create/Edit Button</field>
         </record>
 
         <record model="res.groups" id="contract_create_button" >
-                <field name="name">Hide Contract Create Button</field>
+                <field name="name">Hide Contract Create/Edit Button</field>
         </record>
 
          <record model="res.groups" id="mytimeoff_create_button" >
-                <field name="name">Hide My Timesheet Create Button</field>
+                <field name="name">Hide My Timesheet Create/Edit Button</field>
         </record>
 
          <record model="res.groups" id="caretaker_timeoff_create_button" >
-                <field name="name">Hide Caretaker Timesheet Create Button</field>
+                <field name="name">Hide Caretaker Timesheet Create/Edit Button</field>
         </record>
 
 
