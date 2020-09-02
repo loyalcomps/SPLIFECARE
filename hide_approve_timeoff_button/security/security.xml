@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+
+
+        <record model="res.groups" id="approve_timeoff_button" >
+                <field name="name">Approve Timeoff Button</field>
+        </record>
+
+
+    </data>
+</odoo>
