@@ -1,0 +1,188 @@
+<odoo>
+  <data>
+               <record id="form_employee_create_new_form_id" model="ir.ui.view">
+                 <field name="name">Employee New Form Name</field>
+                 <field name="model">hr.employee</field>
+                 <field name="inherit_id" ref="hr.view_employee_form"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.employee_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//form" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+    <record id="kanban_employee_create_new_form_id" model="ir.ui.view">
+                 <field name="name">Employee New Form Name</field>
+                 <field name="model">hr.employee</field>
+                 <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.employee_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//kanban" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+      <record id="kanban_view_create_new_form_id" model="ir.ui.view">
+                 <field name="name">anban New Form Name</field>
+                 <field name="model">hr.employee</field>
+                 <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.employee_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//kanban" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+            <record id="tree_employee_create_new_form_id" model="ir.ui.view">
+                 <field name="name">Employee New Form Name</field>
+                 <field name="model">hr.employee</field>
+                 <field name="inherit_id" ref="hr.view_employee_tree"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.employee_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//tree" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+
+            <record id="kanban_employee_create_new_form_id" model="ir.ui.view">
+                 <field name="name">Employee kanban view</field>
+                 <field name="model">hr.contract</field>
+                 <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.contract_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//kanban" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+        <record id="form_employee_contract_new_form_id" model="ir.ui.view">
+                 <field name="name">contract Employee Form Name</field>
+                 <field name="model">hr.contract</field>
+                 <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.contract_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//form" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+            <record id="employee_contract_list_id" model="ir.ui.view">
+                 <field name="name">contract Employee List</field>
+                 <field name="model">hr.contract</field>
+                 <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.contract_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//tree" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+
+              <record id="my_time_off_list_view_id" model="ir.ui.view">
+                 <field name="name">My time off List view</field>
+                 <field name="model">account.analytic.line</field>
+                 <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.mytimeoff_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//tree" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+            <record id="my_time_off_kanban_view_id" model="ir.ui.view">
+                 <field name="name">my time off kanban view</field>
+                 <field name="model">account.analytic.line</field>
+                 <field name="inherit_id" ref="hr_timesheet.view_kanban_account_analytic_line"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.mytimeoff_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//kanban" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+            <record id="mt_timeoff_hide_form_view" model="ir.ui.view">
+                 <field name="name">my time off form view</field>
+                 <field name="model">account.analytic.line</field>
+                 <field name="inherit_id" ref="timesheet_grid.timesheet_view_form"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.mytimeoff_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//form" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+               </record>
+
+
+              <record id="caretaker_timesheet_hide_list_view" model="ir.ui.view">
+                 <field name="name">care taeker list</field>
+                 <field name="model">account.analytic.line</field>
+                 <field name="inherit_id" ref="caretaker_timesheet.caretaker_timesheet_view_tree_user"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.caretaker_timeoff_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//tree" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+              </record>
+
+
+
+      <record id="caretaker_timesheet_hide_form_view" model="ir.ui.view">
+                 <field name="name">care taeker form</field>
+                 <field name="model">account.analytic.line</field>
+                 <field name="inherit_id" ref="caretaker_timesheet.caretaker_timesheet_view_form_user"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('rooms_hr_users_security.caretaker_timeoff_create_button')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//form" position="attributes">
+                     <attribute name="create">false</attribute>
+                       <attribute name="edit">false</attribute>
+                   </xpath>
+                 </field>
+              </record>
+
+
+
+
+
+  </data>
+</odoo>
