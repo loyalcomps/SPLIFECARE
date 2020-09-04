@@ -12,4 +12,4 @@ class Selective_work_entry(models.TransientModel):
         # work = self.env['hr.work.entry'].search([('state', '!=', 'validated')])
         for record in work.search([('total_work_attendance','=',0.0)]).browse(active_ids):
             record.action_view_work()
-            return record
+            # return record
