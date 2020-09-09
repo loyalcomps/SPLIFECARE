@@ -335,7 +335,7 @@
                                      <t t-foreach="o.worked_days_line_ids" t-as="l" >
                                          <t t-if="l.work_entry_type_id.code=='Unpaid'">
 
-                                          <t t-set="lop_val" t-value="lop_val+number_of_days"/>
+                                          <t t-set="lop_val" t-value="lop_val+l.number_of_days"/>
                                          </t>
                                       </t>
                                      <t t-esc="lop_val"/>
@@ -354,12 +354,12 @@
                              <tr width="100%">
 
 
-                                    <td width="77%" colspan="4">
-                                                    <table style="padding:3px;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;">
+                                    <td width="55%" colspan="4">
+                                                    <table width="100%" style="padding:3px;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;">
                                                         <tr style="padding:3px;background-color:#B8B8B8;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;background-color:#B0B0B0;">
-                                                             <td width="27%" colspan="2" align="left" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Earnings</td>
-                                                            <td width="15%" align="center" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Actual</td>
-                                                            <td width="15%" align="center" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Amount</td>
+                                                             <td width="60%" colspan="2" align="left" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Earnings</td>
+                                                            <td width="20%" align="center" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Actual</td>
+                                                            <td width="20%" align="center" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Amount</td>
                                                          </tr>
 
 
@@ -370,7 +370,7 @@
 
                               <tr t-foreach="o.line_ids.sorted(key=lambda b: b.category_id.code=='DED')" t-as="l" style="padding:3px;Text-align:center;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;" >
 
-                                            <td width="28%" colspan="2" style="padding:3px;font-weight:bold;border: 1px solid black;border-collapse: collapse;Text-align:left;">
+                                            <td width="60%" colspan="2" style="padding:3px;font-weight:bold;border: 1px solid black;border-collapse: collapse;Text-align:left;">
                                               <t t-if="l.category_id.code!='DED'">
                                               <t t-esc="l.name"/>
                                               </t>
@@ -384,7 +384,7 @@
                                           </td>
 
 
-                                          <td width="15%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
+                                          <td width="20%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
                                               <t t-if="l.category_id.code!='DED'">
 
                                               <t t-esc="l.total"/>
@@ -397,7 +397,7 @@
                                           </td>
 
 
-                                          <td width="15%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
+                                          <td width="20%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
                                               <t t-if="l.category_id.code!='DED'">
 
                                               <t t-esc="l.total"/>
@@ -454,14 +454,14 @@
                                     </td>
 
 
-                                 <td width="43%" colspan="3">
+                                 <td width="45%" colspan="3">
 
 
 
-                                      <table style="padding:3px;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;">
+                                      <table width="100%" style="padding:3px;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;">
                                                         <tr style="padding:3px;background-color:#B8B8B8;Text-align:center; font-weight:bold;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;background-color:#B0B0B0;">
-                                                             <td width="30%" colspan="2" align="left" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Deductions</td>
-                                                         <td width="13%" align="center" style="padding:3px;border-right: 2px solid black;border-collapse: collapse;">Amount</td>
+                                                             <td width="80%" colspan="2" align="left" style="padding:3px;border-right: 1px solid black;border-collapse: collapse;">Deductions</td>
+                                                         <td width="20%" align="center" style="padding:3px;border-right: 2px solid black;border-collapse: collapse;">Amount</td>
                                                      </tr>
 
 
@@ -472,7 +472,7 @@
 
                                     <tr t-foreach="o.line_ids.sorted(key=lambda b: b.category_id.code!='DED')" t-as="l" style="padding:3px;Text-align:center;border-right: 1px solid black;border: 1px solid black;border-collapse: collapse;" >
 
-                                     <td width="30%" colspan="2" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:left;font-weight:bold;">
+                                     <td width="80%" colspan="2" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:left;font-weight:bold;">
                                         <t t-if="l.category_id.code=='DED'">
                                               <t t-esc="l.name"/>
                                               </t>
@@ -485,7 +485,7 @@
                                           </td>
 
 
-                                           <td width="13%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
+                                           <td width="20%" style="padding:3px;border: 1px solid black;border-collapse: collapse;Text-align:right;font-weight:bold;">
                                         <t t-if="l.category_id.code=='DED'">
                                               <t t-esc="l.total"/>
                                           <t t-set="ded_amount" t-value="ded_amount+l.total"/>
@@ -521,7 +521,8 @@
                                              <t t-set="net_sum" t-value="net_sum+m.amount"/>
                                      </t>
                                      </t>
-                                     <t t-esc="net_sum"/>
+                                      <t t-esc="'{0:,.2f}'.format(float(net_sum))" />
+<!--                                     <t t-esc="net_sum"/>-->
 
                                  </td>
                              </tr>
@@ -678,6 +679,7 @@
 
 
                                <tr style="padding:3px;border-top:1px solid black;border-collapse:collapse;">
+<!--                                    <t t-esc="'{0:,.2f}'.format(float(net_sum))" />-->
                                   <td colspan="7" style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:left;">Amount In Words:<span t-esc="o.currency_id.amount_to_text(int(net_sum))"/></td>
                              </tr>
 
