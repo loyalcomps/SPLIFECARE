@@ -32,8 +32,8 @@
 
 
                                    <img
-                    t-if="res_company.logo"
-                    t-att-src="image_data_uri(res_company.logo)"
+                    t-if="o.company_id.logo"
+                    t-att-src="image_data_uri(o.company_id.logo)"
                     alt="Logo" style="max-height:90px;"
                 />
 
@@ -425,7 +425,9 @@
                                              <t t-set="gr_sum" t-value="gr_sum+m.amount"/>
                                      </t>
                                      </t>
-                                    <t t-esc="gr_sum"/>
+
+                                    <t t-esc="'{0:,.2f}'.format(round(float(gr_sum)))" />
+<!--                                    <t t-esc="round(gr_sum)"/>-->
 
 
                                  </td>
@@ -437,7 +439,8 @@
                                              <t t-set="gr_s" t-value="gr_s+m.amount"/>
                                      </t>
                                      </t>
-                                     <t t-esc="gr_s"/>
+                                      <t t-esc="'{0:,.2f}'.format(round(float(gr_s)))" />
+<!--                                     <t t-esc="gr_s"/>-->
                                  </td>
                                                          </tr>
                                                         <tr style="padding:3px;border-top:1px solid black;border-collapse:collapse;">
@@ -503,7 +506,10 @@
                                                          <tr style="border-top:1px solid black;border-collapse:collapse;padding:3px;">
 
                                   <td colspan="2" style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:right;">Gross Ded:</td>
-                                 <td style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:right;"> <t t-esc="ded_amount" /></td>
+                                 <td style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:right;">
+<!--                                     <t t-esc="ded_amount" />-->
+                                     <t t-esc="'{0:,.2f}'.format(round(ded_amount))" />
+                                 </td>
                              </tr>
 
                                                          <tr style="padding:3px;border-top:1px solid black;border-collapse:collapse;">
@@ -521,7 +527,7 @@
                                              <t t-set="net_sum" t-value="net_sum+m.amount"/>
                                      </t>
                                      </t>
-                                      <t t-esc="'{0:,.2f}'.format(float(net_sum))" />
+                                      <t t-esc="'{0:,.2f}'.format(round(net_sum))" />
 <!--                                     <t t-esc="net_sum"/>-->
 
                                  </td>
@@ -679,8 +685,13 @@
 
 
                                <tr style="padding:3px;border-top:1px solid black;border-collapse:collapse;">
+                                 <t t-set="net_total" t-value="'{0:.2f}'.format(round(net_sum))" />
 <!--                                    <t t-esc="'{0:,.2f}'.format(float(net_sum))" />-->
-                                  <td colspan="7" style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:left;">Amount In Words:<span t-esc="o.currency_id.amount_to_text(int(net_sum))"/></td>
+                                  <td colspan="7" style="padding:3px;font-weight:bold;border: 1px solid black;Text-align:left;">Amount In Words:
+<!--                                    <span t-esc="o.currency_id.amount_to_text(int(net_total))"/>-->
+                                    <span t-esc="o.currency_id.amount_to_text(round(float(net_total)))"/>
+
+                              </td>
                              </tr>
 
                               <tr style="padding:3px;border-top:1px solid black;border-collapse:collapse;">
