@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="work_entry_sample_invoice_xls" model="ir.attachment">
+        <field name="name">Sample Work Entry XLS</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="import_related_fields/Sample XLS-CSV File/invoice.xls"/>
+        <field name="name">work_entry.xls</field>
+    </record>
+
+    <record id="work_entry_sample_invoice_with_account_xls" model="ir.attachment">
+        <field name="name">Sample Work Entry Account XLS</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="import_related_fields/Sample XLS-CSV File/invoice_with_account.xls"/>
+        <field name="name">sample_work_entry.xls</field>
+    </record>
+
+    <record id="work_entry_sample_invoice_csv" model="ir.attachment">
+        <field name="name">Sample Invoice CSV</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="import_related_fields/Sample XLS-CSV File/import_invoice.csv"/>
+        <field name="name">work_entry.csv</field>
+    </record>
+
+    <record id="work_entry_sample_invoice_with_account_csv" model="ir.attachment">
+        <field name="name">Sample Invoice Account CSV</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="import_related_fields/Sample XLS-CSV File/import_invoice_with_account.csv"/>
+        <field name="name">sample_work_entry.csv</field>
+    </record>
+</data>
+</odoo>

@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+
+
+        <record id="import_work_entry_type_form" model="ir.ui.view">
+        <field name="name">import</field>
+        <field name="model">hr.work.entry</field>
+            <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_form"/>
+
+        <field name="arch" type="xml">
+
+                 <xpath expr="//sheet/group/group/field[@name='work_entry_type_id']" position="after">
+
+                    <field name="invoice_name" invisible="1"/>
+                   <field name="project_code" invisible="1"/>
+                    <field name="badge_id" invisible="1"/>
+
+               </xpath>
+        </field>
+        </record>
+
+        <record id="gen_inv_wizard_view_form" model="ir.ui.view">
+            <field name="name">wizard for import invoice file </field>
+            <field name="model">gen.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Import Invoice">
+                    <group>
+                        <group>
+                            <field name="import_option" widget='radio' />
+                        </group>
+                    </group>
+                    <group>
+
+                        <group>
+                            <field name="account_opt" widget="radio" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+                    <group>
+                    <field name="file" filename="name"/>
+                </group>
+                </group>
+                    <group>
+                    <group string="Download Sample XLS and CSV Files">
+                        <field name="down_samp_file" widget="checkbox" />
+                        <field name="sample_option" widget="radio" attrs="{'invisible': [('down_samp_file', '=', False)]}"/>
+                        <button name="download_auto" string="Download Sample File" type="object" class="oe_highlight" attrs="{'invisible': [('down_samp_file', '=', False)]}"/>
+                    </group>
+                    </group>
+                    <footer>
+                        <button name="import_csv" string="Import" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="bi_gen_inv_wizard_action" model="ir.actions.act_window">
+            <field name="name">Import Invoice</field>
+            <field name="res_model">gen.invoice</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Import" action="bi_gen_inv_wizard_action"
+                  id="bi_gen_inv_wizard_import"
+                  parent="hr_payroll.menu_hr_payroll_work_entries_root" sequence="30"/>
+
+    </data>
+</odoo>
+
