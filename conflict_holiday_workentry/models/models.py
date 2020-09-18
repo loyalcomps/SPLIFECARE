@@ -92,8 +92,10 @@ class workentry_Conflict(models.Model):
 
         work_entries = super(workentry_Conflict, self).create(vals_list)
 
+        global_leave = self.env['hr.employee'].browse(vals_list[0]['employee_id']).resource_calendar_id.global_leave_ids
 
-        global_leave = self.env['resource.calendar.leaves'].search([('resource_id', '=', False)])
+
+        # global_leave = self.env['resource.calendar.leaves'].search([('resource_id', '=', False)])
 
         global_leave_list =[datetime.strptime(str(leave.date_from), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') for leave in global_leave]
 
