@@ -1,0 +1,151 @@
+<odoo>
+  <data>
+
+
+     <record model="ir.ui.view" id="update_room_room_tree_view">
+            <field name="name">room.room.tree</field>
+            <field name="model">room.room</field>
+                   <field name="inherit_id" ref="room_chart_management.room_room_tree_view" />
+
+            <field name="arch" type="xml">
+              <xpath expr="//tree/field[@name='status']" position="after">
+                          <field name="occupant_name" invisible="1"/>
+                    <field name="occupant_names" widget="many2many_tags"/>
+                    <field name="entering_date"/>
+                    <field name="living_type"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+    <record model="ir.ui.view" id="update_room_setup_form">
+      <field name="name">room_setup_form</field>
+      <field name="model">room.room</field>
+        <field name="inherit_id" ref="room_chart_management.room_setup_form" />
+      <field name="arch" type="xml">
+         <xpath expr="//form/sheet/group/field[@name='status']" position="after">
+                          <field name="occupant_name" invisible="1"/>
+                    <field name="occupant_names" widget="many2many_tags" options="{'no_open':True,'no_create':1,'no_create_edit':1}" />
+                    <field name="entering_date"/>
+                    <field name="living_type" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                </xpath>
+
+          <xpath expr="//sheet/group/field[@name='floor_name']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//sheet/group/field[@name='flat_name']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//sheet/group/field[@name='occupy_type']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+
+
+
+      </field>
+    </record>
+
+
+        <record model="ir.ui.view" id="update_room_chart_tree_view">
+            <field name="name">Room chart tree</field>
+            <field name="model">room.chart</field>
+      <field name="inherit_id" ref="room_chart_management.room_chart_tree_view" />
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='occupant_name']" position="after">
+                     <field name="occupant_names" widget="many2many_tags"/>
+                 </xpath>
+         <xpath expr="//field[@name='occupant_name']" position="attributes">
+             <attribute name="invisible">1</attribute>
+
+         </xpath>
+
+            </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="update_room_chart_setup_form">
+      <field name="name">Room Chart</field>
+      <field name="model">room.chart</field>
+         <field name="inherit_id" ref="room_chart_management.room_chart_setup_form" />
+        <field name="arch" type="xml">
+         <xpath expr="//form/sheet/group/group/field[@name='occupant_name']" position="after">
+                          <field name="occupant_names" widget="many2many_tags"/>
+         </xpath>
+
+                <xpath expr="//form/sheet/group/group/field[@name='occupant_name']" position="attributes">
+             <attribute name="invisible">1</attribute>
+         </xpath>
+
+
+
+             <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group/field[@name='chart_room']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group/field[@name='chart_floor']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group/field[@name='chart_flat']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+
+
+             <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='chart_room']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='chart_floor']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+          <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='chart_flat']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+        </xpath>
+
+
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="update_view_report_room_chart_kanban">
+    <field name="name">room.chart.kanban</field>
+    <field name="model">room.chart</field>
+        <field name="inherit_id" ref="room_chart_management.view_report_room_chart_kanban" />
+    <field name="arch" type="xml">
+
+         <xpath expr="//kanban/templates/t/div/div/h3/field[@name='occupant_name']" position="after">
+             <field name="occupant_names" widget="many2many_tags"/>
+         </xpath>
+             <xpath expr="//kanban/templates/t/div/div/h3/field[@name='occupant_name']" position="attributes">
+             <attribute name="invisible">1</attribute>
+         </xpath>
+    </field>
+         </record>
+
+
+       <record id="update_room_chart_checkout_graph" model="ir.ui.view">
+          <field name="name">room.chart.graph</field>
+      <field name="model">room.chart</field>
+      <field name="inherit_id" ref="room_chart_management.room_chart_checkout_graph" />
+    <field name="arch" type="xml">
+         <xpath expr="//graph/field[@name='occupant_name']" position="after">
+             <field name="occupant_names" widget="many2many_tags" type="measure"/>
+         </xpath>
+             <xpath expr="//graph/field[@name='occupant_name']" position="attributes">
+             <attribute name="invisible">1</attribute>
+         </xpath>
+    </field>
+       </record>
+
+
+
+
+  </data>
+</odoo>
