@@ -11,6 +11,9 @@
                    <field name="date_start"/>
                  <field name="date_stop"/>
 
+                   <field name="start_time"/>
+                 <field name="end_time"/>
+
             </xpath>
         </field>
      </record>
