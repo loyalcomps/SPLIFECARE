@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+
+<!--        <record id="caregiver_attendance_view_form_user" model="ir.ui.view">-->
+<!--            <field name="name">hr.work.entry</field>-->
+<!--            <field name="model">hr.work.entry</field>-->
+<!--            <field name="inherit_id" ref="hr_payroll.hr_work_entry_gantt"/>-->
+<!--&lt;!&ndash;            <field name="mode">primary</field>&ndash;&gt;-->
+<!--            &lt;!&ndash;<field name="priority">10</field>&ndash;&gt;-->
+<!--            <field name="arch" type="xml">-->
+<!--               <gantt string="Work Entries" date_start="date_start" date_stop="date_stop" color="color" default_group_by="project_id" decoration-secondary="state == 'validated'" decoration-warning="state == 'conflict'" scales="day,week,month" precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:full'}" create="1" plan="0">-->
+<!--                <field name="color" invisible="1"/>-->
+<!--                <field name="state"/>-->
+<!--                <field name="employee_id"/>-->
+<!--                <field name="name"/>-->
+<!--            </gantt>-->
+
+
+
+<!--            </field>-->
+<!--        </record>-->
+
+
+
+        <record id="caregiver_attendance_action_all" model="ir.actions.act_window">
+            <field name="name">Caregiver Attendance</field>
+            <field name="context">{'group_by': ['project_id','work_entry_type_id'],'default_name':"Attendance",
+               'default_name':"Attendance", }</field>
+
+            <field name="res_model">hr.work.entry</field>
+          <field name="view_mode">tree,gantt</field>
+            <field name="view_id" ref="caregiver_attendance_view_form_user"/>
+
+           <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Record a new activity
+              </p><p>
+                You can register and track your workings hours by project every
+                day. Every time spent on a project will become a cost and can be re-invoiced to
+                customers if required.
+              </p>
+            </field>
+        </record>
+
+
+        <record id="caregiver_attendance_action_view_all_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="caregiver_attendance_view_form_user"/>
+            <field name="act_window_id" ref="caregiver_attendance_action_all"/>
+        </record>
+
+
+        <menuitem id="caregiver_attendance_menu_activity_all"
+            name="Caregiver Attendance"
+            parent="hr_payroll.menu_hr_payroll_work_entries_root"
+            action="caregiver_attendance_action_all" sequence="80"/>
+
+    </data>
+</odoo>

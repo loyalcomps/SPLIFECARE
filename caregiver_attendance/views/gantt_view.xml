@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+
+        <record id="update_gantt_view_for_caregiver_attendances" model="ir.ui.view">
+            <field name="name">hr.work.entry</field>
+            <field name="model">hr.work.entry</field>
+            <field name="arch" type="xml">
+               <gantt string="Work Entries" date_start="date_start"
+                      date_stop="date_stop" color="color" default_group_by="employee_id"
+                      decoration-secondary="state == 'validated'"
+                      decoration-warning="state == 'conflict'" scales="day,week,month"
+                      precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:full'}"
+                      create="1" plan="0">
+                <field name="color" invisible="1"/>
+                <field name="state"/>
+                <field name="employee_id"/>
+                <field name="name"/>
+            </gantt>
+
+            </field>
+        </record>
+
+
+            <record id="update_caregiver_attendance_line_search" model="ir.ui.view">
+            <field name="name">line.search</field>
+            <field name="model">hr.work.entry</field>
+            <field name="arch" type="xml">
+
+            <search string="Search Work Entry">
+                <field name="employee_id"/>
+                <field name="name"/>
+                <filter name="my_work_entries" string="My Entries" domain="[('employee_id.user_id', '=', uid)]"/>
+                <filter name="work_entries_error" string="Conflicting" domain="[('state', '=', 'conflict')]"/>
+                <separator/>
+                <filter name="date_filter" string="Date" date="date_start"/>
+                <filter name="current_month" string="Current Month" domain="[
+                    ('date_stop', '&gt;=', (context_today()).strftime('%Y-%m-01')),
+                    ('date_start', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter name="group_employee" string="Employee" context="{'group_by': 'employee_id'}"/>
+                <filter name="group_work_entry_type" string="Type" context="{'group_by': 'work_entry_type_id'}"/>
+                <filter name="group_start_date" string="Start Date" context="{'group_by': 'date_start'}"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+            </field>
+        </record>
+
+
+
+
+
+        <record id="update_caregiver_attendances" model="ir.actions.act_window">
+            <field name="name">Caregiver Attendance</field>
+            <field name="res_model">hr.work.entry</field>
+            <field name="search_view_id" ref="update_caregiver_attendance_line_search"/>
+<!--             <field name="view_ids" eval="[(5, 0, 0),-->
+<!--        (0, 0, {'view_mode': 'gantt', 'view_id': ref('update_gantt_view_for_caregiver_attendances')}),-->
+<!--        ]"/>-->
+             <field name="context">{'group_by': ['project_id','work_entry_type_id'],'default_name':"Attendance",
+              }</field>
+          <field name="view_mode">gantt</field>
+
+<!--     <field name="view_id" ref="update_gantt_view_for_caregiver_attendances"/>-->
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Record a new activity
+              </p><p>
+                You can register and track your workings hours by project every
+                day. Every time spent on a project will become a cost and can be re-invoiced to
+                customers if required.
+              </p>
+            </field>
+        </record>
+
+
+        <record id="action_view_for_caregiver_attendances" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">gantt</field>
+            <field name="view_id" ref="update_gantt_view_for_caregiver_attendances"/>
+            <field name="act_window_id" ref="update_caregiver_attendances"/>
+        </record>
+
+
+        <menuitem id="menu_for_caregiver_attendance"
+            name="Caregiver Attendance"
+            parent="hr_payroll.menu_hr_payroll_work_entries_root"
+            action="update_caregiver_attendances" sequence="30"/>
+
+    </data>
+</odoo>
