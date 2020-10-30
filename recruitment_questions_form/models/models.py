@@ -16,10 +16,11 @@ class Recruitment_questions_form(models.Model):
     _description = 'Recruitment Form'
 
     overall_option_ids = fields.One2many(
-        'overall.option', 'order_id', 'Overall Option',
+        'overall.option', 'order_id', 'Overall Option',copy=True
+
         )
 
-    order_line = fields.One2many('recruitment.questions.form.line', 'order_id', string='Recruitment Form')
+    order_line = fields.One2many('recruitment.questions.form.line', 'order_id',copy=True,string='Recruitment Form')
 
     candidate_name = fields.Many2one('hr.applicant',string='Candidate Name',store=True)
 
@@ -40,7 +41,7 @@ class Recruitment_questions_form_line(models.Model):
 
 
 
-    sale_order_option_ids = fields.One2many('overall.option', 'line_id', 'Optional Products Lines')
+    sale_order_option_ids = fields.One2many('overall.option', 'line_id', 'Optional Products Lines',copy=True)
 
 
     order_id = fields.Many2one('recruitment.questions.form', string='Room Chart', ondelete='cascade')

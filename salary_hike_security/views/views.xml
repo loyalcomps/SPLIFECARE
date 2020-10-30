@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+     <record id="security_hr_employee_salary_hike" model="ir.ui.view">
+        <field name="name">hr.employee.form.timesheet</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="employee_salary_hike_form.hr_employee_salary_hike"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//button[@name='salary_hike_window']" position="attributes">
+
+                    <attribute name="groups">salary_hike_security.group_security_salary_hike</attribute>
+
+                </xpath>
+
+        </field>
+     </record>
+  </data>
+</odoo>
