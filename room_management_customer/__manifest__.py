@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Room chart Management",
+    'name': "room_management_customer",
 
     'summary': """
-        Room chart Management""",
+        client List in room Management""",
 
     'description': """
-    
-     Room chart Management
-    
-        1.Room creation
-        2.Floor Creation
-        3.Living Type creation
-        4.Flat creation
-        5.Room Chart creation
-       
+        Long description of module's purpose
     """,
 
     'author': "Loyal IT Solutions Pvt. Ltd.",
@@ -27,18 +19,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','room_chart_management'],
 
     # always loaded
     'data': [
-
-       'data/ir_sequence.xml',
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         'views/views.xml',
-        'views/floor.xml',
-       'views/room_chart.xml',
         'views/templates.xml',
-        # 'views/studio_partner_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

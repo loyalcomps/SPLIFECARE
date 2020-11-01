@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+<!--   <record id="update_caregiver_attendances" model="ir.actions.act_window">-->
+<!--            <field name="name">Clients</field>-->
+<!--            <field name="res_model">hr.work.entry</field>-->
+<!--            <field name="search_view_id" ref="update_caregiver_attendance_line_search"/>-->
+<!--             <field name="context">{'group_by': ['project_id','work_entry_type_id'],'default_name':"Attendance",-->
+<!--              }</field>-->
+<!--&lt;!&ndash;             <field name="domain">[('caregiver_bool','=',True)]</field>&ndash;&gt;-->
+<!--          <field name="view_mode">gantt</field>-->
+<!--            <field name="help" type="html">-->
+<!--              <p class="o_view_nocontent_smiling_face">-->
+<!--                Record a new activity-->
+<!--              </p><p>-->
+<!--                You can register and track your workings hours by project every-->
+<!--                day. Every time spent on a project will become a cost and can be re-invoiced to-->
+<!--                customers if required.-->
+<!--              </p>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+
+        <menuitem id="client_room_management_id"
+            name="Residence"
+            parent="room_chart_management.main_rooms_chart_submenu"
+            action="base.action_partner_form" sequence="40"/>
+
+<!--       <record model="ir.ui.menu" id="room_chart_management.rooms_setup">-->
+<!--      <field name="name">Senior Living</field>-->
+<!--    </record>-->
+
+
+  </data>
+</odoo>

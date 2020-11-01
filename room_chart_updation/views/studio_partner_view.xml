@@ -10,10 +10,13 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='studio_page_wTjWy']/group[@name='studio_group_wTjWy']" position="after">
 
-                    <group string="Room details">
+
+                   <group>
+                       <group string="Room details">
                         <field name="room_number"/>
 
                     </group>
+                   </group>
                 </xpath>
             </field>
         </record>

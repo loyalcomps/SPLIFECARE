@@ -60,7 +60,7 @@ class Room_chart_management(models.Model):
         self.current_status = 'vacant'
 
         for change in self.order_line:
-            if self.occupant_name:
+            if self.occupant_names:
                 partners = self.occupant_names.ids
                 partner_id = self.occupant_name.id
                 for j in partners:

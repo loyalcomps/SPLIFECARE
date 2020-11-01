@@ -291,7 +291,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="Rooms" id="rooms_setup"/>
+    <menuitem name="Senior Living" id="rooms_setup" sequence="15"/>
 
 
     <!--<menuitem name="Room Charts" id="rooms_chart_submenu" parent="rooms_setup"-->
@@ -299,7 +299,7 @@
 
 
 
-      <menuitem id="rooms_setup_main" name="Configurations" parent="rooms_setup" sequence="2"/>
+      <menuitem id="rooms_setup_main" name="Configurations" parent="rooms_setup" sequence="50"/>
 
 
 

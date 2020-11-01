@@ -165,7 +165,10 @@
 
 
 
-    <menuitem name="Room Charts" id="rooms_chart_submenu" parent="rooms_setup" sequence="1"
+    <menuitem name="Room Management" id="main_rooms_chart_submenu" parent="rooms_setup" sequence="25"
+              />
+
+      <menuitem name="Room Charts" id="room_charts_submenu" parent="main_rooms_chart_submenu" sequence="55"
               action="roomchart_setup_action_window"/>
 
 
