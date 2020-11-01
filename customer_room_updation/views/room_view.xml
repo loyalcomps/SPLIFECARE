@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<record model="ir.ui.view" id="updation_room_chart_setup_form">
+      <field name="name">Room Chart Form updation</field>
+      <field name="model">room.chart</field>
+    <field name="inherit_id" ref="room_chart_management.room_chart_setup_form"/>
+
+      <field name="arch" type="xml">
+
+                          <xpath expr="//form/sheet/group/group/field[@name='entering_date']" position="after">
+                              <field name="check_out_date"/>
+
+                          </xpath>
+
+           <xpath expr="//button[@name='action_confirm']" position="attributes">
+               <attribute name="attrs">{'invisible':[('current_status','=','occupy')]}</attribute>
+                          </xpath>
+
+           <xpath expr="//button[@name='action_vacant']" position="attributes">
+               <attribute name="attrs">{'invisible':[('current_status','=','vacant')]}</attribute>
+                          </xpath>
+
+
+      </field>
+</record>
+    </data>
+</odoo>
+
+

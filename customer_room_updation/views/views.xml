@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="preview_room_chart_updation_field" model="ir.ui.view">
+            <field name="name">update.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="room_chart_updation.preview_update_view_partner_form_field"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group/field[@name='room_number']" position="after">
+
+
+                        <field name="living_type"/>
+                          <field name="entering_date"/>
+                          <field name="status"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
