@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+
+
+
+
+      <record model="ir.ui.view" id="incident_report_form_line_tree">
+      <field name="name">incident.report.form tree</field>
+      <field name="model">incident.report</field>
+      <field name="arch" type="xml">
+          <tree string="Incident Report">
+              <field name="customer_name" />
+          </tree>
+      </field>
+       </record>
+
+
+    <record model="ir.ui.view" id="incident_report_line_setup_form">
+      <field name="name">incident report form Form</field>
+      <field name="model">incident.report</field>
+      <field name="arch" type="xml">
+          <form string="Incident Report">
+              <sheet>
+                  <group>
+                        <group>
+                            <field name="customer_name" />
+                        </group>
+
+                    </group>
+                  <notebook>
+                      <page string="Incident Report">
+                          <field name="order_line" mode="tree">
+                                <tree string="Incident Report" editable="bottom">
+
+                                            <field name="entering_date" width="10" />
+                                    <field name="activity_log" width="80" />
+                                     <field name="customer_name" invisible="10"/>
+                                    </tree>
+                          </field>
+                      </page>
+                  </notebook>
+              </sheet>
+              </form>
+      </field>
+    </record>
+
+
+       <record id="incident_view_search_inherit" model="ir.ui.view">
+        <field name="name">incident.report</field>
+        <field name="model">incident.report</field>
+        <field name="arch" type="xml">
+            <search string="Incident Report Analysis">
+                <field name="customer_name"/>
+                <separator/>
+
+                <group expand="1" string="Group By">
+
+                    <filter string="Customer" name="customer_name" context="{'group_by':'customer_name'}"/>
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="incident_report_form_action_window">
+      <field name="name">Incident Report</field>
+      <field name="res_model">incident.report</field>
+<!--        <field name="context">{'default_customer_name': active_id}</field>-->
+       <field name="search_view_id" ref="incident_view_search_inherit"/>
+        <field name="view_mode">tree,form</field>
+         <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create
+                </p>
+            </field>
+    </record>
+
+         <menuitem id="log_incident_report_form" name="Incident Report" parent="sale.menu_sale_config" action="incident_report_form_action_window"/>
+
+  </data>
+</odoo>

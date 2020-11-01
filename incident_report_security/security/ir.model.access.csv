@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_incident_report_security_incident_report_security,incident_report_security.incident_report_security,model_incident_report_security_incident_report_security,base.group_user,1,1,1,1

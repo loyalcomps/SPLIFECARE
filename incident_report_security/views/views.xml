@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+   <record id="security_partner_activity_log_partner" model="ir.ui.view">
+            <field name="name">res.partner.form.activity</field>
+        <field name="model">res.partner</field>
+            <field name="inherit_id" ref="incident_report.activity_log_partner"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//button[@name='incident_report_window']" position="attributes">
+                    <attribute name="groups">incident_report_security.group_security_incident_report</attribute>
+                </xpath>
+            </field>
+   </record>
+  </data>
+</odoo>
