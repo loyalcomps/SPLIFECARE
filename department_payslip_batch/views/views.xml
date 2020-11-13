@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="department_payslip_batch.list">
+      <field name="name">department_payslip_batch list</field>
+      <field name="model">department_payslip_batch.department_payslip_batch</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="department_payslip_batch.action_window">
+      <field name="name">department_payslip_batch window</field>
+      <field name="res_model">department_payslip_batch.department_payslip_batch</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="department_payslip_batch.action_server">
+      <field name="name">department_payslip_batch server</field>
+      <field name="model_id" ref="model_department_payslip_batch_department_payslip_batch"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="department_payslip_batch" id="department_payslip_batch.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="department_payslip_batch.menu_1" parent="department_payslip_batch.menu_root"/>
+    <menuitem name="Menu 2" id="department_payslip_batch.menu_2" parent="department_payslip_batch.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="department_payslip_batch.menu_1_list" parent="department_payslip_batch.menu_1"
+              action="department_payslip_batch.action_window"/>
+    <menuitem name="Server to list" id="department_payslip_batch" parent="department_payslip_batch.menu_2"
+              action="department_payslip_batch.action_server"/>
+-->
+  </data>
+</odoo>
