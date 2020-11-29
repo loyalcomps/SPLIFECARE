@@ -6,7 +6,7 @@ from odoo import models, fields, api
 class Hrpayroll(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
-    no_of_shift = fields.Float("No.of Shift",compute='no_of_shift_count')
+    no_of_shift = fields.Float("No.of Shift",compute='no_of_shift_count',store=True)
 
     @api.depends('work_entry_type_id','work_entry_type_id.no_of_hours','number_of_days', 'number_of_hours')
     @api.onchange('work_entry_type_id', 'number_of_days', 'number_of_hours')
