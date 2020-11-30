@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "caregiver_salary_statement_report",
+    'name': "avoid_undefined_slots",
 
     'summary': """
-        caregiver_salary_statement_report""",
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-    salary rule category for travel expense with code 'TRAVEL'
-    salary rule category for advance with code 'ADV'
-    basic salary = category code with 'BASIC'
-
+        Long description of module's purpose
     """,
 
-    'author': "LOYAL IT SOLUTIONS PVT LTD",
-    'website': "http://www.loyalitsolutions.com",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -22,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-      'depends': ['base','sale','hr_payroll','report_xlsx',],
+    'depends': ['base','hr_payroll'],
 
     # always loaded
     'data': [

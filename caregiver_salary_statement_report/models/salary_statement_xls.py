@@ -40,13 +40,11 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
             ((select hre.id as id,
 			  hre.name as employee_name,
 			  hre.barcode as code,
-              sum(case when hrpl.name='Basic Salary' then hrpl.total else 0 end) as basic_salary,     
               sum(case when hrpl.code ~~* 'TDS%%' then hrpl.total else 0 end) as less_tds,
               sum(case when hrpl.code='NET' then hrpl.total else 0 end) as net_amount
 
                         from hr_payslip_line as hrpl
                 left join hr_payslip as hrp on hrp.id=hrpl.slip_id
-                left join hr_payslip_worked_days as hrw on hrp.id=hrw.payslip_id
                 left join hr_employee as hre on hre.id=hrp.employee_id
                 left join hr_department as hp on hp.id=hre.department_id
                 left join hr_job as hrj on hrj.id=hre.job_id
@@ -69,6 +67,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
 
              left join
              (select hl.employee_id as em_id,
+             sum(case when hc.code='BASIC' then hl.total else 0 end) as basic_salary,     
              sum(case when hl.code !~~* 'TDS%%' and hc.code<>'ADV' and hc.name='Deduction' then hl.total else 0 end) as other_deduction,
              sum(case when hc.code='TRAVEL' then hl.total else 0 end) as travel_expense,
 			 sum(case when hc.code='ADV' then hl.total else 0 end) as advance
