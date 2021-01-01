@@ -1,0 +1,102 @@
+<odoo>
+    <data>
+        <report
+            id="splc_customer_invoice_print"
+            model="account.move"
+            string="Invoice Print - Service"
+            report_type="qweb-pdf"
+            name="customer_invoice_print_splc.splc_invoice_print"
+            file="customer_invoice_print_splc.splc_invoice_print"
+        />
+
+        <template id="splc_invoice_print_layout_header_my">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div style="font-size : 18px;" class="header">
+
+                <div class="row">
+
+
+             <table  style="width:100%;font-family: 'Times New Roman';font-size : 18px;border:1px solid black;border-collapse: collapse;" >
+
+                               <col style="width: 50%;" />
+                               <col style="width: 50%;" />
+
+
+                 <tr>
+
+                     <td align="center" valign="center" style="vertical-align:middle;border:1px solid black;border-collapse: collapse;">
+                                        <img align="center" valign="center"
+                    t-if="o.company_id.logo"
+                    t-att-src="image_data_uri(o.company_id.logo)"
+                    alt="Logo" style="vertical-align:middle;max-height:150px;max-width:90%"
+                />
+                                   </td>
+
+                                   <td tyle="border:1px solid black;border-collapse: collapse;padding:2px;">
+                                         <p style="font-family: 'Times New Roman';font-size : 18px;padding:2px;">
+                                             <span t-field="o.company_id.name"/><br/>
+                                             <span t-field="o.company_id.street"/><br/>
+                                <span t-field="o.company_id.street2"/><br/>
+                                   <span t-field="o.company_id.city"/>
+                                <span t-field="o.company_id.zip"/><br/>
+
+<!--                                  Phone: <span t-field="o.company_id.partner_id.phone"/><br/>-->
+                             <span style="font-family: 'Times New Roman';font-size : 18px; " >GSTIN/UIN: <span t-field="o.company_id.vat" /></span><br></br>
+                        <span style="font-family: 'Times New Roman';font-size : 18px; " >PAN: <span t-field="o.company_id.company_registry" /></span><br/>
+                         <t t-if="o.company_id.state_id.name">
+                             <span style="font-family: 'Times New Roman';font-size : 18px; ">State Name :  <span t-field="o.company_id.state_id.name"/>, </span></t>
+
+                         <span style="font-family: 'Times New Roman';font-size : 18px; ">Code : 32</span>
+
+                            </p>
+                                   </td>
+                               </tr>
+                      </table>
+                </div>
+
+            </div>
+            <br/>
+             <div class="footer">
+
+             <table  class="fixed" style="font-family: 'Times New Roman';font-size : 18px;width:100%" >
+                 <col style="width: 100%;" />
+                 <tr style="border:1px solid black;border-collapse: collapse;">
+                     <td align="center">
+                         0471 2542666 / accounts@ashacare.in / www.ashacare.in
+                     </td>
+
+                 </tr>
+                 <tr style="border:1px solid black;border-collapse: collapse;">
+                     <td align="center">
+
+                             This is a Computer Generated Invoice no signature is required
+
+                     </td>
+                 </tr>
+             </table>
+                 <div class="text-center page_number">
+                        <div class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            of
+                            <span class="topage"/>
+                        </div>
+                    </div>
+
+        </div>
+        </template>
+
+        <template id="splc_invoice_print_external_layout">
+            <div class="article">
+                <t t-call="customer_invoice_print_splc.splc_invoice_print_layout_header_my"/>
+                <t t-raw="0"/>
+            </div>
+        </template>
+
+    </data>
+</odoo>

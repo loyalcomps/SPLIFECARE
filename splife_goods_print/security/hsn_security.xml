@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        
+        <record model="res.groups" id="hsn_user_security" >
+                <field name="name">View invoice HSN </field>
+        </record>
+    </data>
+</odoo>

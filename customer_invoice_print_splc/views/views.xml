@@ -1,0 +1,477 @@
+<odoo>
+    <data>
+        <template id="splc_invoice_print_template_document">
+            <t t-call="customer_invoice_print_splc.splc_invoice_print_external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page">
+                    <div class="row">
+
+
+
+                   </div>
+
+                   <style>
+                       @font-face {
+                            font-family: 'Times New Roman';
+                            src: url('/customer_invoice_print_splc/static/src/fonts/times_new_roman.ttf') format('ttf');
+                       }
+                       tr{
+                            page-break-inside: avoid;
+                       }
+                       table, th, td {
+				            border: 1px solid black;
+				            border-collapse: collapse;
+                       }
+                       table {
+                        width: 100%;
+                       }
+                       table.fixed, table.fixed-border-none{
+				            table-layout: fixed;
+			            }
+                       table.fixed td {
+				            overflow: hidden;
+                       }
+                       table.fixed-border-none {
+                            border-collapse: collapse;
+                            border:0;
+                       }
+                       table.fixed-border-none tr,table.fixed-border-none td{
+                            border:0;
+                       }
+
+                   </style>
+                   <br/>
+                   <div class="row">
+                       <div class="col-12">
+
+                            <table class="fixed-border-none" style="font-family: 'Times New Roman';font-size : 18px;padding:5px;border:1px solid black;border-collapse: collapse;" >
+
+                               <col style="width: 15%;" />
+                               <col style="width: 35%;" />
+                               <col style="width: 20%;" />
+                               <col style="width: 30%;" />
+
+
+                               <tr>
+                                   <td style="padding:2px;">
+                                       Buyer
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                       <t t-esc="o.partner_id.name"/>
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;padding:2px;">
+                                     Invoice No.
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;">
+                                      Dated
+                                   </td>
+
+                               </tr>
+
+                                <tr>
+                                   <td style="padding:2px;">
+                                      Address
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                       <span t-field="o.partner_id.street"/>
+<!--                                 <span t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"],"no_marker": True }'/>-->
+
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+                                       <t t-esc="o.name"/>
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+                                      <t t-if="o.invoice_date">
+                                <t t-esc="datetime.datetime.strptime(str(o.invoice_date), '%Y-%m-%d').strftime('%d-%b-%Y')"/>
+                            </t>
+                                   </td>
+                               </tr>
+
+
+                                <tr>
+                                   <td>
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                       <span t-field="o.partner_id.street2"/>
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-bottom:1px solid black;border-left:1px solid black;border-collapse: collapse;">
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-bottom:1px solid black;border-left:1px solid black;border-collapse: collapse;">
+                                   </td>
+                               </tr>
+                                <tr>
+                                   <td>
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                       <span t-field="o.partner_id.city"/>
+                                       <span t-field="o.partner_id.zip"/>
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;">
+                                       Supplier's Ref.
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;">
+                                        Due Date
+                                   </td>
+                               </tr>
+                                <tr>
+                                   <td>
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                       <t t-if="o.partner_id.state_id.name">
+                                       <span t-field="o.partner_id.state_id.name"/>,
+                                       </t>
+                                       <t t-if="o.partner_id.country_id.name">
+                                       <span t-field="o.partner_id.country_id.name"/>
+                                       </t>
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+                                     <t t-esc="o.ref"/>
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+                                     <t t-if="o.invoice_date_due">
+                                <t t-esc="datetime.datetime.strptime(str(o.invoice_date_due), '%Y-%m-%d').strftime('%d-%b-%Y')"/>
+                            </t>
+                                   </td>
+                               </tr>
+
+                               <tr>
+                                   <td style="padding:2px;">
+                                     Phone
+                                   </td>
+                                   <td style="font-weight:bold;padding:2px;">
+                                 <span t-field="o.partner_id.phone"/>
+
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;">
+
+                                   </td>
+                                   <td style="padding:2px;border-left:1px solid black;border-collapse: collapse;">
+
+                                   </td>
+                               </tr>
+
+                                <tr>
+                                   <td style="padding:2px;">
+                                    email
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;">
+                                 <span t-field="o.partner_id.email"/>
+
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+<!--                                     <t t-esc="o.ref"/>-->
+                                   </td>
+                                   <td style="padding:2px;font-weight:bold;border-left:1px solid black;border-collapse: collapse;">
+<!--                                     <t t-if="o.invoice_date_due">-->
+<!--                                <t t-esc="datetime.datetime.strptime(str(o.invoice_date_due), '%Y-%m-%d').strftime('%d-%b-%Y')"/>-->
+<!--                            </t>-->
+                                   </td>
+                               </tr>
+                           </table>
+
+
+
+
+
+                           <br/>
+
+
+
+
+
+
+                            <table class="fixed-border-none" style="font-family: 'Times New Roman';font-size : 18px;" >
+                                <col style="width: 10%;" />
+                                <col style="width: 55%;" />
+                                <col style="width: 15%;" />
+                                <col style="width: 20%;" />
+
+                                <thead>
+                                    <tr style="border:1px solid black;border-collapse: collapse;">
+                                        <th align="center" style="padding:10px;" >Sl.No:</th>
+                                        <th align="center" style="padding:10px;" >Particulars</th>
+                                        <th align="center" style="padding:10px;" >HSN/SAC</th>
+                                        <td align="center" style="padding:10px;font-weight:bold;" >Amount</td>
+
+                                    </tr>
+                                </thead>
+                                <t t-set="kfc" t-value="0"/>
+                                <t t-set="cgst" t-value="0"/>
+                                <t t-set="sgst" t-value="0"/>
+                                <t t-set="roundoff" t-value="0"/>
+                                <t t-set="index_val" t-value="0"/>
+                                <tbody>
+                                    <tr style="border-right:1px solid black;border-left:1px solid black;border-collapse: collapse;" t-foreach="o.invoice_line_ids" t-as="l">
+                                         <t t-if="l.account_id.name!='Round Off'">
+                                        <td align="center" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
+                                            <t t-esc="l_index+1"/>
+                                            <t t-set="index_val" t-value="l_index"/>
+                                        </td>
+                                        <td align="left" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
+                                            <t t-esc="l.product_id.name"/>
+                                        </td>
+                                        <td align="center" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
+                                            <span t-field="l.product_id.l10n_in_hsn_code"/>
+                                        </td>
+                                        <td align="right" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
+<!--                                            <t t-esc="l.price_subtotal"/>-->
+                                           <t t-esc="'{0:.2f}'.format(float(l.price_subtotal))"/>
+                                        </td>
+                                         </t>
+
+<!--                                        <td align="center" style="padding:10px;">-->
+<!--                                            <t t-esc="'{0:.3f}'.format(float(l.price_unit))"/>-->
+<!--                                        </td>-->
+
+                                    </tr>
+
+                             <t t-foreach="o.line_ids" t-as="tax">
+                                 <t t-if="tax.account_id.name=='Round Off'">
+                                     <t t-set="roundoff" t-value="tax.credit"/>
+                                 </t>
+
+                             </t>
+
+                                     <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                  <tr style="border-right:1px solid black;border-left:1px solid black;">
+                                            <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>
+                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                                   OUTPUT <span class="text-right" t-esc="amount_by_group[0]"/>
+                                                </td>
+                                               <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>
+                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;" class="text-right o_price_total">
+                                                    <span t-esc="amount_by_group[3].replace('₹',' ')"/>
+                                                </td>
+                                            </t>
+                                            <t t-else="">
+                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>
+                                                <td class="text-right" style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                                    OUTPUT <span t-esc="amount_by_group[0]"/>
+<!--                                                    <span class="text-nowrap"> on-->
+<!--                                                        <t t-esc="amount_by_group[4]"/>-->
+<!--                                                    </span>-->
+                                                </td>
+                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>
+                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;" class="text-right o_price_total">
+                                                    <span t-esc="amount_by_group[3].replace('₹',' ')"/>
+<!--                                                    <span t-esc="float(amount_by_group[3])"/>-->
+                                                </td>
+                                            </t>
+                                        </tr>
+
+<!--                                       <t t-if="not (o.line_ids.filtered(lambda line: line.tax_line_id))">-->
+
+<!--                                         <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                   OUTPUT CGST-->
+<!--                                                </td>-->
+<!--                                               <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;" class="text-right o_price_total">-->
+<!--                                                   0.00-->
+<!--                                                </td>-->
+<!--                                         </tr>-->
+<!--                                            <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                   OUTPUT SGST-->
+<!--                                                </td>-->
+<!--                                               <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;" class="text-right o_price_total">-->
+<!--                                                   0.00-->
+<!--                                                </td>-->
+<!--                                         </tr>-->
+<!--                                            <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                                   OUTPUT KFC-->
+<!--                                                </td>-->
+<!--                                               <td align="center" style="border-right:1px solid black;border-left:1px solid black;"></td>-->
+<!--                                                <td style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;" class="text-right o_price_total">-->
+<!--                                                   0.00-->
+<!--                                                </td>-->
+<!--                                         </tr>-->
+<!--                                           </t>-->
+
+                                    </t>
+
+
+<!--                                  <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                    <td align="center" style="">-->
+<!--                                    </td>-->
+<!--                                    <td align="right" style="font-weight:bold;">-->
+<!--                                      OUTPUT CGST-->
+<!--                                    </td>-->
+<!--                                        <td align="center" style="">-->
+<!--                                        </td>-->
+<!--                                        <td align="right" style="font-weight:bold;">-->
+<!--&lt;!&ndash;                                           <t t-esc="'{0:.2f}'.format(float(l.price_subtotal))"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                  </tr>-->
+
+<!--                                   <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                    <td align="center" style="">-->
+<!--                                    </td>-->
+<!--                                    <td align="right" style="font-weight:bold;">-->
+<!--                                     OUTPUT SGST-->
+<!--                                    </td>-->
+<!--                                        <td align="center" style="">-->
+<!--                                        </td>-->
+<!--                                        <td align="right" style="font-weight:bold;">-->
+<!--&lt;!&ndash;                                           <t t-esc="'{0:.2f}'.format(float(l.price_subtotal))"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                  </tr>-->
+
+<!--                                     <tr style="border-right:1px solid black;border-left:1px solid black;">-->
+<!--                                    <td align="center" style="">-->
+<!--                                    </td>-->
+<!--                                    <td align="right" style="font-weight:bold;">-->
+<!--                                     KFC-->
+<!--                                    </td>-->
+<!--                                        <td align="center" style="">-->
+<!--                                        </td>-->
+<!--                                        <td align="right" style="font-weight:bold;">-->
+<!--&lt;!&ndash;                                           <t t-esc="'{0:.2f}'.format(float(l.price_subtotal))"/>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                  </tr>-->
+
+                                    <tr style="padding:5px;border-right:1px solid black;border-left:1px solid black;">
+                                    <td align="center" style="padding:5px;border-right:1px solid black;border-left:1px solid black;">
+                                    </td>
+                                    <td align="right" style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                     Round Off
+                                    </td>
+                                        <td align="center" style="padding:5px;border-right:1px solid black;border-left:1px solid black;">
+                                        </td>
+                                        <td align="right" style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                           <t t-esc="'{0:.2f}'.format(float(roundoff))"/>
+                                        </td>
+                                  </tr>
+
+
+                                   <tr style="border:1px solid black;border-collapse: collapse;">
+                                    <td align="center" style="padding:5px;border-right:1px solid black;border-left:1px solid black;">
+                                    </td>
+                                    <td align="right" style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                     Total
+                                    </td>
+                                        <td align="center" style="padding:5px;border-right:1px solid black;border-left:1px solid black;">
+                                        </td>
+                                        <td align="right" style="padding:5px;font-weight:bold;border-right:1px solid black;border-left:1px solid black;">
+                                           <t t-esc="'{0:.2f}'.format(float(o.amount_total))"/>
+                                        </td>
+                                  </tr>
+
+                                  <tr style="border:1px solid black;border-collapse: collapse;">
+                                    <td colspan="4" align="left" style="padding:5px;">
+                                      Total Invoice value (in words)<span style="font-weight:bold;" t-esc="o.currency_id.amount_to_text((float(o.amount_total)))"/>
+                                    </td>
+
+                                  </tr>
+
+
+
+                                </tbody>
+                            </table>
+                           <br/>
+
+                           <table style="font-family: 'Times New Roman';font-size : 18px;" >
+
+                               <col style="width: 20%;" />
+                               <col style="width: 40%;" />
+                               <col style="width: 40%;" />
+
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td colspan="3" style="padding:2px;font-size : 18px;width:100%font-family: 'Times New Roman';Text-align:left;">
+                                        Declaration<br/>
+                                        We declare that the amount charged is for the services provided or to be provided as mentioned in the invoice.<br/>
+                                        The contents of the invoice are true and correct.
+                                    </td>
+                               </tr>
+
+                                <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td colspan="2" style="padding:2px;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                        Company's Bank Details
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border-bottom:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       For <span t-field="o.company_id.name"/>
+                                       <!-- A.S. Carehomes Pvt Ltd -->
+                                    </td>
+                               </tr>
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="padding:2px;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       Bank Name:
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                            <t t-esc="o.invoice_partner_bank_id.bank_id.name"/>
+                                    </td>
+
+                                    <td style="padding:2px;border-bottom:0px;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+
+                                    </td>
+                               </tr>
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="padding:2px;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       A/c No.:
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                            <t t-esc="o.invoice_partner_bank_id.acc_number"/>
+                                    </td>
+
+                                    <td style="padding:2px;border-bottom:0px;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+
+                                    </td>
+                               </tr>
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="padding:2px;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       Branch &amp; IFS Code:
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                         <t t-if="o.invoice_partner_bank_id.bank_id.street">
+                                             <t t-esc="o.invoice_partner_bank_id.bank_id.street"/>
+                                         </t>
+                                         <t t-if="o.invoice_partner_bank_id.bank_id.bic">
+                                               <t t-if="o.invoice_partner_bank_id.bank_id.street">
+                                                   &amp;
+                                               </t>
+
+                                             <t t-esc="o.invoice_partner_bank_id.bank_id.bic"/>
+                                         </t>
+
+                                    </td>
+                                      <td style="padding:2px;border-bottom:0px;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                    Authorised Signatory
+                                    </td>
+                               </tr>
+
+
+
+                           </table>
+
+
+                       </div>
+                   </div>
+
+
+               </div>
+           </t>
+       </template>
+       <template id="splc_invoice_print">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="customer_invoice_print_splc.splc_invoice_print_template_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+       </template>
+    </data>
+</odoo>
+

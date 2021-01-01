@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+                <record model="ir.ui.view" id="account_move_hsn_wise">
+            <field name="name">Account move hsn</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//sheet/notebook/page/field[@name='narration']" position="after">
+                    <field name="gst_tax_ids" groups="splife_goods_print.hsn_user_security">
+                        <tree editable="bottom" string="HSN">
+                                 <field name="hsn"/>
+                                <field name="taxable"/>
+                                <field name="rate"/>
+                                <field name="amount"/>
+                                 <field name="move_id" invisible="1"/>
+                                <field name="tax_name" invisible="1"/>
+
+<!--                            <field name="hsn"/>-->
+<!--                            <field name="taxable"/>-->
+<!--&lt;!&ndash;                            <field name="tax_name"/>&ndash;&gt;-->
+<!--                            <field name="rate"/>-->
+<!--                            <field name="amount"/>-->
+<!--&lt;!&ndash;                             <field name="sgst_rate"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="sgst_amount"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                             <field name="igst_rate"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="igst_amount"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                             <field name="kfc_rate"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="kfc_amount"/>&ndash;&gt;-->
+
+<!--                             <field name="move_id" invisible="1"/>-->
+
+
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
