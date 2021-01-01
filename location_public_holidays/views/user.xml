@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+<!--          <record model="ir.ui.view" id="location_form_public_holiday">-->
+<!--      <field name="name">location</field>-->
+<!--      <field name="model">x_public_holidays</field>-->
+<!--      <field name="inherit_id" ref="studio_customization.default_form_view_fo_e31cc5c2-f9d4-4c63-8d0c-5556319393e9"/>-->
+<!--      <field name="arch" type="xml">-->
+
+<!--          <xpath expr="//sheet/group/group[@name='studio_group_a7d632_right']" position="after">-->
+<!--              <field name="location_name" widget="many2many_tags"/>-->
+<!--          </xpath>-->
+<!--      </field>-->
+<!--       </record>-->
+
+             <record id="personal_hr_employee_work_location" model="ir.ui.view">
+                <field name="name">hr.employee.location</field>
+                <field name="model">hr.employee</field>
+                <field name="inherit_id" ref="hr.view_employee_form"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//sheet/group/group/field[@name='company_id']" position="after">
+                         <field name="location_name" invisible="1"/>
+                    </xpath>
+                </field>
+            </record>
+
+
+
+        <record id="location_wise_users_form" model="ir.ui.view">
+        <field name="name">res.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']/group[1]" position="after">
+                <group string="Locations">
+                    <field
+                        name="location_name"
+                        widget="many2many_tags"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

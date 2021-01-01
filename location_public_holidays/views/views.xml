@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+
+
+             <record model="ir.ui.view" id="location_setup_form">
+      <field name="name">type_setup_form</field>
+      <field name="model">work.location</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+                        <group>
+
+          <field name="name" />
+
+                        </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="location_action_window">
+      <field name="name">Locations</field>
+      <field name="res_model">work.location</field>
+      <field name="view_mode">tree,form</field>
+
+       <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create
+                </p>
+            </field>
+    </record>
+
+
+      <menuitem name="Locations" id="locations_names" parent="hr.menu_human_resources_configuration"
+              action="location_action_window"/>
+  </data>
+</odoo>
