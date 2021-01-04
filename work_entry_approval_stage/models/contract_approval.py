@@ -28,14 +28,18 @@ class HrContract(models.Model):
         date_from = datetime.combine(date_from, datetime.min.time())
         date_to = datetime.combine(date_to, datetime.max.time())
         work_data = defaultdict(int)
+        work_data_double_entry = defaultdict(int)
 
         # First, found work entry that didn't exceed interval.
+
+
         work_entries = self.env['hr.work.entry'].read_group(
             [
                 ('state', 'in', ['validated','button_validate_approval']),
                 ('date_start', '>=', date_from),
                 ('date_stop', '<=', date_to),
                 ('contract_id', 'in', self.ids),
+                ('work_entry_type_id.code', 'not in', ('DB100','NIGHT100'))
             ],
             ['hours:sum(duration)'],
             ['work_entry_type_id']
@@ -45,7 +49,9 @@ class HrContract(models.Model):
         # Second, found work entry that exceed interval and compute right duration.
         work_entries = self.env['hr.work.entry'].search(
             [
+
                 '&', '&',
+                '&',('work_entry_type_id.code','not in', ('DB100','NIGHT100')),
                 ('state', 'in', ['validated','button_validate_approval']),
                 ('contract_id', 'in', self.ids),
                 '|', '|', '&', '&',
@@ -59,8 +65,55 @@ class HrContract(models.Model):
                 '&',
                 ('date_start', '<', date_from),
                 ('date_stop', '>', date_to),
+
+
+
             ]
         )
+
+        work_entries_double_entry = self.env['hr.work.entry'].read_group(
+            [
+                ('state', 'in', ['validated', 'button_validate_approval']),
+                ('date_start', '>=', date_from),
+                ('date_start', '<=', date_to),
+                ('contract_id', 'in', self.ids),
+                ('work_entry_type_id.code', 'in', ('DB100','NIGHT100'))
+            ],
+            ['hours:sum(duration)'],
+            ['work_entry_type_id']
+        )
+        work_data.update(
+            {data['work_entry_type_id'][0] if data['work_entry_type_id'] else False: data['hours'] for data in
+             work_entries_double_entry})
+
+        # Second, found work entry that exceed interval and compute right duration.
+        work_entries_double_entry = self.env['hr.work.entry'].search(
+            [
+
+                '&', '&',
+                '&',('work_entry_type_id.code', 'in', ('DB100','NIGHT100')),
+                ('state', 'in', ['validated', 'button_validate_approval']),
+                ('contract_id', 'in', self.ids),
+                '|', '|', '&', '&',
+                ('date_start', '>=', date_from),
+                ('date_start', '<', date_to),
+                ('date_start', '>', date_to),
+                '&', '&',
+                ('date_start', '<', date_from),
+                ('date_start', '<=', date_to),
+                ('date_start', '>', date_from),
+                '&',
+
+                ('date_start', '<', date_from),
+                ('date_start', '>', date_to),
+
+
+            ]
+        )
+
+        for work_entrys in work_entries_double_entry:
+
+            work_data[work_entrys.work_entry_type_id.id] += work_entrys.duration  # Number of hours
 
         for work_entry in work_entries:
             date_start = max(date_from, work_entry.date_start)
