@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+             <record id="include_time_off_type_form" model="ir.ui.view">
+                    <field name="name">hr.leave.type.form</field>
+                    <field name="model">hr.leave.type</field>
+                    <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+                    <field name="arch" type="xml">
+                        <xpath expr="//group[@name='visibility']" position="after">
+                            <group name="include_time_off" string="Include Time Off Type">
+                                <field name="include_time_off_type"/>
+                            </group>
+                        </xpath>
+                    </field>
+                </record>
+
+    </data>
+</odoo>
