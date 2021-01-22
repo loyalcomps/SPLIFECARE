@@ -41,7 +41,7 @@ class HrContract(models.Model):
         if not vals_list:
             return self.env['hr.work.entry']
 
-        return self.env['hr.work.entry'].sudo().create(vals_list)
+        return self.env['hr.work.entry'].create(vals_list)
 
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
@@ -175,8 +175,8 @@ class HrPayslipEmployees(models.TransientModel):
         self._check_undefined_slots(work_entries, payslip_run)
 
         validated = work_entries.action_validate()
-        if not validated:
-            raise UserError(_("Some work entries could not be validated."))
+        # if not validated:
+        #     raise UserError(_("Some work entries could not be validated."))
 
         default_values = Payslip.default_get(Payslip.fields_get())
         for contract in contracts:
