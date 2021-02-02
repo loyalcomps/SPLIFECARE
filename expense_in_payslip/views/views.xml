@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reimburse_hr_payslip_inherit_expense" model="ir.ui.view">
+        <field name="name">expense</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" name="payslip_expenses" type="object" icon="fa-dollar" attrs="{'invisible': [('hr_expenses_count', '=', 0)]}">
+                    <field string="Expenses" name="hr_expenses_count" widget="statinfo"/>
+                </button>
+            </div>
+            <xpath expr="//sheet/notebook/page[@name='account_info']" position="after">
+                 <page string="Expense In Payslip">
+                        <separator string="Expenses"/>
+                <field name="hr_expense_sheet_ids"/>
+                 </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

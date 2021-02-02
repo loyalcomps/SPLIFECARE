@@ -100,12 +100,16 @@ class workentry_Conflict(models.Model):
 
             global_leave_list =[datetime.strptime(str(leave.date_from), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') for leave in global_leave]
 
+            start_year = (vals_list[0]['date_start']).strftime('%Y')
+            start_date = (vals_list[0]['date_start']).strftime('%Y-%m-%d')
+            end_year = (vals_list[0]['date_stop']).strftime('%Y')
+            end_date = (vals_list[0]['date_stop']).strftime('%Y-%m-%d')
 
 
-            start_year = datetime.strptime(str(vals_list[0]['date_start']), '%Y-%m-%d %H:%M:%S').strftime('%Y')
-            start_date = datetime.strptime(str(vals_list[0]['date_start']), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
-            end_year = datetime.strptime(str(vals_list[0]['date_stop']), '%Y-%m-%d %H:%M:%S').strftime('%Y')
-            end_date = datetime.strptime(str(vals_list[0]['date_stop']), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
+            # start_year = datetime.strptime(str(vals_list[0]['date_start']), '%Y-%m-%d %H:%M:%S').strftime('%Y')
+            # start_date = datetime.strptime(str(vals_list[0]['date_start']), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
+            # end_year = datetime.strptime(str(vals_list[0]['date_stop']), '%Y-%m-%d %H:%M:%S').strftime('%Y')
+            # end_date = datetime.strptime(str(vals_list[0]['date_stop']), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
 
             for s in self.allsundays(start_year):
                 year_list.append(str(s.strftime('%Y-%m-%d')))

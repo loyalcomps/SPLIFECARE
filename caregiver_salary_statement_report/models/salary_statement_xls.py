@@ -26,12 +26,14 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
              select dd.id,
                 (dd.employee_name) as employee_name,
 				dd.code as code,
+				dd.acc_number as acc_number,
+				dd.ifsc_code as ifsc_code,
+				dd.bank_name as bank_name,
+				dd.branch_name as branch_name,
                 (dd.basic_salary) as basic_salary,
 				(dd.working_days) as working_days,
-				dd.total_working_days as total_working_days,
-				dd.ta as travel_expense,
-				dd.travel_expenses as travel_expense_value,
-				(dd.basic_salary+dd.ta) as total,
+				dd.travel_expense as travel_expense,
+				(dd.basic_salary+dd.travel_expense) as total,
                 (dd.less_tds) as less_tds,
                 dd.other_deduction as other_deduction,
 				dd.advance as advance,
@@ -42,8 +44,11 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
             ((select hre.id as id,
 			  hre.name as employee_name,
 			  hre.barcode as code,
+			  hre.acc_number as acc_number,
+			  hre.ifsc_code as ifsc_code,
+			  hre.bank_name as bank_name,
+			  hre.branch_name as branch_name,
               sum(case when hrpl.code ~~* 'TDS%%' then hrpl.total else 0 end) as less_tds,
-              sum(case when hrpl.code ='ENCASH100' then hrpl.total else 0 end) as ta,
               sum(case when hrpl.code='NET' then hrpl.total else 0 end) as net_amount
 
                         from hr_payslip_line as hrpl
@@ -60,11 +65,6 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                 left join
                 (select 
 				sum(case when ht.code='DB100' then (hw.no_of_shift*2) else hw.no_of_shift end) as working_days,
-				sum(hw.number_of_days) as total_working_days,
-               CASE WHEN DIV(sum(hw.number_of_days)::int,6)<=4 THEN DIV(sum(hw.number_of_days)::int,6)*300
-              WHEN DIV(sum(hw.number_of_days)::int,6) > 4 THEN 4*300
-              ELSE 0
-             END AS ta_values,
 				 h.employee_id as employee_id from hr_payslip as h
                 left join hr_payslip_worked_days as hw on h.id=hw.payslip_id
 				 left join hr_work_entry_type as ht on ht.id=hw.work_entry_type_id
@@ -77,7 +77,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
              (select hl.employee_id as em_id,
              sum(case when hc.code='BASIC' then hl.total else 0 end) as basic_salary,     
              sum(case when hl.code !~~* 'TDS%%' and hc.code<>'ADV' and hc.name='Deduction' then hl.total else 0 end) as other_deduction,
-             sum(case when hc.code='TRAVEL' then hl.total else 0 end) as travel_expenses,
+             sum(case when hc.code='TRAVEL' then hl.total else 0 end) as travel_expense,
 			 sum(case when hc.code='ADV' then hl.total else 0 end) as advance
 
 			  from hr_payslip_line as hl
@@ -102,6 +102,12 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
 
             employee_name = row['employee_name'] if row['employee_name'] else " "
             code = row['code'] if row['code'] else " "
+
+            acc_number = row['acc_number'] if row['acc_number'] else " "
+            ifsc_code = row['ifsc_code'] if row['ifsc_code'] else " "
+            bank_name = self.env['res.bank'].browse(row['bank_name']).name if row['bank_name'] else " "
+            branch_name = row['branch_name'] if row['branch_name'] else " "
+
             basic_salary = row['basic_salary'] if row['basic_salary'] else 0.0
             working_days = row['working_days'] if row['working_days'] else 0.0
             travel_expense = row['travel_expense'] if row['travel_expense'] else 0.0
@@ -124,6 +130,11 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                 'other_deduction': other_deduction if other_deduction else 0.0,
                 'advance': advance if advance else 0.0,
                 'net_amount': net_amount if net_amount else 0.0,
+
+                'acc_number':acc_number if acc_number else " ",
+                'ifsc_code':ifsc_code if ifsc_code else " " ,
+                'bank_name':bank_name if bank_name else " ",
+                'branch_name':branch_name if branch_name else " ",
 
             }
 
@@ -176,6 +187,8 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
             {'bottom': True, 'top': True, 'left': True, 'font_size': 14, 'align': 'right'})
         font_size_8_left = workbook.add_format(
             {'bottom': True, 'top': True, 'left': True, 'font_size': 14, 'align': 'left'})
+        font_size_8_left_border = workbook.add_format(
+            {'bottom': True, 'top': True, 'left': True,'right': True, 'font_size': 14, 'align': 'left','border':1})
 
         formattotal = workbook.add_format(
             {'bg_color': 'e2e8e8', 'font_size': 14, 'bottom': True, 'right': True, 'left': True, 'top': True,
@@ -233,9 +246,9 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
             date_month = ""
             date_year = ""
 
-        sheet.merge_range('A1:K1', company.name, blue_mark3)
+        sheet.merge_range('A1:O1', company.name, blue_mark3)
         # sheet.merge_range('A2:P2', res+" ," + res2, blue_mark2)
-        sheet.merge_range('A2:K2', "PAYMENT SCHEDULE OF RE FEE + TRAVEL EXPENSE TO CARE GIVERS FROM " + date_object_date_start.strftime(
+        sheet.merge_range('A2:O2', "PAYMENT SCHEDULE OF RE FEE + TRAVEL EXPENSE TO CARE GIVERS FROM " + date_object_date_start.strftime(
                 '%d-%m-%Y') + " to " + date_object_date_end.strftime('%d-%m-%Y'), blue_mark2)
 
         self.model = self.env.context.get('active_model')
@@ -243,10 +256,10 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
 
         if date_start and date_end:
 
-            sheet.merge_range('A5:K5', "Date : " + date_object_date_start.strftime(
+            sheet.merge_range('A5:O5', "Date : " + date_object_date_start.strftime(
                 '%d-%m-%Y') + " to " + date_object_date_end.strftime('%d-%m-%Y'), font_size_8blod)
         elif date_start:
-            sheet.merge_range('A5:K5', "Date : " + date_object_date_start.strftime('%d-%m-%Y'),
+            sheet.merge_range('A5:O5', "Date : " + date_object_date_start.strftime('%d-%m-%Y'),
                               font_size_8blod)
 
         sheet.merge_range('A6:A7', "SL.NO.", title_style)
@@ -255,7 +268,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
         sheet.merge_range('C6:C7', "CODE NO", title_style)
         sheet.merge_range('D6:D7', "DUTY DAYS", title_style)
         sheet.merge_range('E6:E7', "RE", title_style)
-        sheet.merge_range('F6:F7', "OFF DAYS ALLOWANCE", title_style)
+        sheet.merge_range('F6:F7', "TA", title_style)
         sheet.merge_range('G6:G7', "TOTAL", title_style)
         sheet.merge_range('H6:J6', "DEDUCTIONS", title_style)
         # sheet.merge_range('I6:I7', "SALARY FOR THE MONTH", title_style)
@@ -264,6 +277,13 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
         sheet.write_string('J7', "OTHER DEDUCTIONS", title_style)
 
         sheet.merge_range('K6:K7', "NET AMOUNT", title_style)
+
+        sheet.merge_range('L6:O6', "BANK DETAILS", title_style)
+        # sheet.merge_range('I6:I7', "SALARY FOR THE MONTH", title_style)
+        sheet.write_string('L7', "A/C No.", title_style)
+        sheet.write_string('M7', "IFSC CODE", title_style)
+        sheet.write_string('N7', "BANK NAME", title_style)
+        sheet.write_string('O7', "BRANCH", title_style)
         # sheet.write('K6', "SALARY PAYABLE", title_style)
 
         linw_row = 7
@@ -284,7 +304,10 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                         font_size_8_right)
             sheet.write(linw_row, line_column + 9, '{0:.2f}'.format(float(line['other_deduction'])), font_size_8_right)
             sheet.write(linw_row, line_column + 10, '{0:.2f}'.format(float(line['net_amount'])), font_size_8_right)
-
+            sheet.write(linw_row, line_column + 11, line['acc_number'], font_size_8_left)
+            sheet.write(linw_row, line_column + 12, line['ifsc_code'], font_size_8_left)
+            sheet.write(linw_row, line_column + 13, line['bank_name'], font_size_8_left)
+            sheet.write(linw_row, line_column + 14, line['branch_name'], font_size_8_left_border)
 
 
             linw_row = linw_row + 1

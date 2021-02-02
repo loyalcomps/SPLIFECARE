@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Salary Other Input -->
+    <record id="payslip_expense_input_type" model="hr.payslip.input.type">
+        <field name="name">Payslip Expenses</field>
+        <field name="code">EXP</field>
+    </record>
+
+</odoo>
