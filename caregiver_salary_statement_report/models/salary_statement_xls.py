@@ -59,6 +59,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                 where to_char(date_trunc('day',hrp.date_from),'YYYY-MM-DD')::date between %s and %s
               and hrp.company_id=%s 
               and hrp.state in ('verify','done')
+              and hrp.struct_id=2
 
                 group by hre.id) as a
 
@@ -71,6 +72,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                 where to_char(date_trunc('day',h.date_from),'YYYY-MM-DD')::date between %s and %s
                  and h.company_id=%s
                  and h.state in ('verify','done')
+                 and h.struct_id=2
                 group by h.employee_id)as b on a.id=b.employee_id
 
              left join
@@ -86,11 +88,12 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
               where to_char(date_trunc('day',hp.date_from),'YYYY-MM-DD')::date between %s and %s
               and hp.company_id=%s
                  and hp.state in ('verify','done')
+                 and hp.struct_id=2
 
               group by hl.employee_id
              )as c on a.id=c.em_id
 
-            )dd   
+            )dd where dd.net_amount<>0
               '''
         self.env.cr.execute(query, (
             date_from, date_to, company_id,
