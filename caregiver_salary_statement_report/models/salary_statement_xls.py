@@ -32,8 +32,11 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
 				dd.branch_name as branch_name,
                 (dd.basic_salary) as basic_salary,
 				(dd.working_days) as working_days,
-				dd.travel_expense as travel_expense,
-				(dd.basic_salary+dd.travel_expense) as total,
+				dd.total_working_days as total_working_days,
+				dd.ta as travel_expense,
+				dd.travel_expenses as travel_expense_value,
+				(dd.basic_salary+dd.ta) as total,
+			
                 (dd.less_tds) as less_tds,
                 dd.other_deduction as other_deduction,
 				dd.advance as advance,
@@ -49,6 +52,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
 			  hre.bank_name as bank_name,
 			  hre.branch_name as branch_name,
               sum(case when hrpl.code ~~* 'TDS%%' then hrpl.total else 0 end) as less_tds,
+              sum(case when hrpl.code ='ENCASH100' then hrpl.total else 0 end) as ta,
               sum(case when hrpl.code='NET' then hrpl.total else 0 end) as net_amount
 
                         from hr_payslip_line as hrpl
@@ -66,6 +70,11 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
                 left join
                 (select 
 				sum(case when ht.code='DB100' then (hw.no_of_shift*2) else hw.no_of_shift end) as working_days,
+				sum(hw.number_of_days) as total_working_days,
+				CASE WHEN DIV(sum(hw.number_of_days)::int,6)<=4 THEN DIV(sum(hw.number_of_days)::int,6)*300
+              WHEN DIV(sum(hw.number_of_days)::int,6) > 4 THEN 4*300
+              ELSE 0
+             END AS ta_values,
 				 h.employee_id as employee_id from hr_payslip as h
                 left join hr_payslip_worked_days as hw on h.id=hw.payslip_id
 				 left join hr_work_entry_type as ht on ht.id=hw.work_entry_type_id
@@ -79,7 +88,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
              (select hl.employee_id as em_id,
              sum(case when hc.code='BASIC' then hl.total else 0 end) as basic_salary,     
              sum(case when hl.code !~~* 'TDS%%' and hc.code<>'ADV' and hc.name='Deduction' then hl.total else 0 end) as other_deduction,
-             sum(case when hc.code='TRAVEL' then hl.total else 0 end) as travel_expense,
+             sum(case when hc.code='TRAVEL' then hl.total else 0 end) as travel_expenses,
 			 sum(case when hc.code='ADV' then hl.total else 0 end) as advance
 
 			  from hr_payslip_line as hl
@@ -271,7 +280,7 @@ class CAREGIVER_salary_statementXls(models.AbstractModel):
         sheet.merge_range('C6:C7', "CODE NO", title_style)
         sheet.merge_range('D6:D7', "DUTY DAYS", title_style)
         sheet.merge_range('E6:E7', "RE", title_style)
-        sheet.merge_range('F6:F7', "TA", title_style)
+        sheet.merge_range('F6:F7', "OFF DAYS ALLOWANCE", title_style)
         sheet.merge_range('G6:G7', "TOTAL", title_style)
         sheet.merge_range('H6:J6', "DEDUCTIONS", title_style)
         # sheet.merge_range('I6:I7', "SALARY FOR THE MONTH", title_style)
