@@ -1,0 +1,93 @@
+<odoo>
+    <data>
+        <record id="daily_gst_report_wizard_view" model="ir.ui.view">
+            <field name="name">gst.report.wizard Report</field>
+            <field name="model">gst.report.wizard</field>
+            <field name="arch" type="xml">
+
+
+                <form>
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group col="4" >
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+
+                        </group>
+
+                         <group>
+                             <field name="company_id" required="1"/>
+                     </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" colspan="4" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                    </div>
+                    <footer states="choose">
+                        <button name="generate_gstrsale_report" string="Generate GST Report" type="object"
+                                class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel" class="oe_highlight"/>
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight"/>
+                    </footer>
+                </form>
+<!--                <form string="Report Options">-->
+<!--                    <group col="4">-->
+<!--                        <field name="date_from"/>-->
+<!--                        <field name="date_to"/>-->
+<!--                    </group>-->
+<!--                    <group col="4">-->
+<!--                        <field name="company_id"/>-->
+<!--                        <field name="target_move"/>-->
+<!--                    </group>-->
+
+<!--                    <footer>-->
+<!--                        <button name="export_xls" type="object" default_focus="1"-->
+<!--                                string="Excel Print" class="oe_highlight"/>-->
+<!--                        or-->
+
+<!--                        <button string="Cancel" class="oe_link" special="cancel"/>-->
+<!--                    </footer>-->
+<!--                </form>-->
+            </field>
+        </record>
+
+
+        <record id="daily_gst_report_wizard" model="ir.actions.act_window">
+            <field name="name">GST Report</field>
+            <field name="res_model">gst.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="daily_gst_report_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+      <menuitem id="menu_daily_gst" name="GST Report"
+                  parent="account.menu_finance_reports" action="daily_gst_report_wizard"
+                  sequence="6"/>
+
+
+<!--         <report-->
+<!--            id="gst_report_xls"-->
+<!--            model="account.move"-->
+<!--            string="GST Report"-->
+<!--            report_type="xlsx"-->
+<!--            name="splife_gst_report.action_gst_report_xls"-->
+<!--            file="splife_gst_report.action_gst_report_xls"-->
+
+<!--        />-->
+
+
+        <!--<record id="action_own_product_xls" model="ir.actions.report">-->
+        <!--<field name="name">Own Product Sales Report</field>-->
+        <!--<field name="model">report.salary_statement_report.action_product_xls.xlsx</field>-->
+        <!--<field name="report_type">xlsx</field>-->
+        <!--<field name="report_name">salary_statement_report.action_product_xls.xlsx</field>-->
+    <!--</record>-->
+
+    </data>
+</odoo>
