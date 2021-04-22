@@ -20,7 +20,7 @@
                 <field name="arch" type="xml">
                     <xpath expr="//sheet/notebook/page[@name='other_info']" position="after">
                          <page string="Tax">
-                             <field name="gst_tax_ids">
+                             <field name="account_gst_tax_ids">
                                 <tree editable="bottom" string="Tax">
 
                                          <field name="move_id"/>

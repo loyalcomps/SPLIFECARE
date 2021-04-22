@@ -35,7 +35,7 @@ class AccountMove(models.Model):
          # Generate one tax line per tax, however many invoice lines it's applied to
 
         taxes_grouped = self.generate_tax()
-        gst_tax_lines = self.gst_tax_ids.browse([])
+        gst_tax_lines = self.account_gst_tax_ids.browse([])
         gst_val = {}
 
         for place_of_supply, inv_tax_lines in taxes_grouped.items():  # invoice_gst_tax_lines.items():
@@ -54,7 +54,7 @@ class AccountMove(models.Model):
             }
             gst_tax_lines += gst_tax_lines.create(so_order)
 
-        self.gst_tax_ids = gst_tax_lines
+        self.account_gst_tax_ids = gst_tax_lines
         s = 1
         return
 
@@ -63,7 +63,7 @@ class AccountMove(models.Model):
         # self.gst_tax_ids.unlink()
 
         grouped_tax_lines = {}
-        gst_tax_lines = self.gst_tax_ids
+        gst_tax_lines = self.account_gst_tax_ids
         duplicate_line_tax = {}
 
         for invoice_line in self.invoice_line_ids:
@@ -158,7 +158,7 @@ class AccountMove(models.Model):
         return grouped_tax_lines
 
 
-    gst_tax_ids = fields.One2many("account.gst.tax", "move_id", string="Tax",)
+    account_gst_tax_ids = fields.One2many("account.gst.tax", "move_id", string="Tax",)
 
 
     def compute_taxes(self):
@@ -186,7 +186,7 @@ class AccountMove(models.Model):
     def create(self, vals):
         request=super(AccountMove, self).create(vals)
 
-        if any(line.tax_ids for line in request.invoice_line_ids) and not request.gst_tax_ids:
+        if any(line.tax_ids for line in request.invoice_line_ids) and not request.account_gst_tax_ids:
             request.compute_taxes()
         return request
 

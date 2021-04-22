@@ -215,7 +215,8 @@
                                             <t t-set="index_val" t-value="l_index"/>
                                         </td>
                                         <td align="left" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
-                                            <t t-esc="l.product_id.name"/>
+<!--                                            <t t-esc="l.product_id.name"/>-->
+                                            <t t-esc="l.name"/>
                                         </td>
                                         <td align="center" style="padding:10px;border-right:1px solid black;border-left:1px solid black;">
                                             <span t-field="l.product_id.l10n_in_hsn_code"/>
