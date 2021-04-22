@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+
+        <record model="ir.ui.view" id="hide_invoice__extend_round_off_view">
+            <field name="name">invoice.move.extend_round_off</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account_roundoff.invoice__extend_round_off_view"/>
+            <field name="arch" type="xml">
+
+              <field name="rounded_total" position="attributes">
+                <attribute name="invisible">1</attribute>
+              </field>
+
+            </field>
+        </record>
+  </data>
+</odoo>
