@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+
+
+      <record id="logo_for_hr_department" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.departmentid</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="before">
+                     <field name="logo" widget="image"  class="oe_avatar"/>
+                </xpath>
+            </field>
+   </record>
+   <record id="invoice_form_inherit_department_id" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.departmentid</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group/field[@name='company_id']" position="after">
+                    <field name="department_id"/>
+                </xpath>
+            </field>
+   </record>
+
+  </data>
+</odoo>
