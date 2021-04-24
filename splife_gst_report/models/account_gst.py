@@ -24,7 +24,7 @@ class AccountMove(models.Model):
 
 
     @api.onchange('invoice_line_ids')
-    def _onchange_invoice_line_ids(self):
+    def account_gst_onchange_invoice_line_ids(self):
         mon1 = []
 
         for i in self:
@@ -35,7 +35,7 @@ class AccountMove(models.Model):
 
          # Generate one tax line per tax, however many invoice lines it's applied to
 
-        taxes_grouped = self.generate_tax()
+        taxes_grouped = self.account_generate_tax()
         gst_tax_lines = self.account_gst_tax_ids.browse([])
         gst_val = {}
 
@@ -66,7 +66,7 @@ class AccountMove(models.Model):
         return
 
     # @api.onchange('line_ids')
-    def generate_tax(self):
+    def account_generate_tax(self):
         # self.gst_tax_ids.unlink()
 
         grouped_tax_lines = {}
@@ -171,7 +171,7 @@ class AccountMove(models.Model):
     account_gst_tax_ids = fields.One2many("account.gst.tax", "move_id", string="Tax",)
 
 
-    def compute_taxes(self):
+    def account_compute_taxes(self):
         """Function used in other module to compute the taxes on a fresh invoice created (onchanges did not applied)"""
         account_invoice_tax = self.env['account.gst.tax']
         ctx = dict(self._context)
@@ -184,14 +184,14 @@ class AccountMove(models.Model):
                 self.invalidate_cache()
 
                 # Generate one tax line per tax, however many invoice lines it's applied to
-                tax_grouped = invoice.generate_tax()
+                tax_grouped = invoice.account_generate_tax()
 
                 # Create new tax lines
                 # if self.type not in ['out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt']:
                 for tax in tax_grouped.values():
                     account_invoice_tax.create(tax)
             else:
-                self._onchange_invoice_line_ids()
+                self.account_gst_onchange_invoice_line_ids()
 
         # dummy write on self to trigger recomputations
         return
@@ -202,7 +202,7 @@ class AccountMove(models.Model):
         request=super(AccountMove, self).create(vals)
 
         if any(line.tax_ids for line in request.invoice_line_ids) and not request.account_gst_tax_ids:
-            request.compute_taxes()
+            request.account_compute_taxes()
         return request
 
     @api.model
@@ -211,7 +211,7 @@ class AccountMove(models.Model):
 
         for taxes in self:
             if any(line.tax_ids for line in taxes.invoice_line_ids) and not taxes.account_gst_tax_ids:
-                taxes.compute_taxes()
+                taxes.account_compute_taxes()
         return request
 
 
