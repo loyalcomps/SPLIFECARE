@@ -25,6 +25,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/hsn_security.xml',
+        'views/layout.xml',
         'views/views.xml',
         'views/templates.xml',
         'views/hsn_data.xml',
