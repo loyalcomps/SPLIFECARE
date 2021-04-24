@@ -83,6 +83,92 @@
             <br/>
              <div class="footer">
 
+                <div class="last-page">
+                                  <table style="font-family: 'Times New Roman';font-size : 18px;" >
+
+                               <col style="width: 20%;" />
+                               <col style="width: 40%;" />
+                               <col style="width: 40%;" />
+
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td colspan="3" style="border:1px solid black;padding:2px;font-size : 18px;width:100%font-family: 'Times New Roman';Text-align:left;">
+                                        Declaration<br/>
+                                        We declare that the amount charged is for the services provided or to be provided as mentioned in the invoice.<br/>
+                                        The contents of the invoice are true and correct.
+                                    </td>
+                               </tr>
+
+                                <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td colspan="2" style="border-left:1px solid black;padding:2px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                        Company's Bank Details
+                                    </td>
+                                     <td style="border-left:1px solid black;border-right:1px solid black;padding:2px;font-weight:bold;border-bottom:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       For <span t-field="o.company_id.name"/>
+                                       <!-- A.S. Carehomes Pvt Ltd -->
+                                    </td>
+                               </tr>
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="border-left:1px solid black;padding:2px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       Bank Name:
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                            <t t-esc="o.invoice_partner_bank_id.bank_id.name"/>
+                                    </td>
+
+                                    <td style="border-left:1px solid black;border-right:1px solid black;padding:2px;border-bottom:0px;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+
+                                    </td>
+                               </tr>
+
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="border-left:1px solid black;padding:2px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       A/c No.:
+                                    </td>
+                                     <td style="padding:2px;font-weight:bold;border:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                            <t t-esc="o.invoice_partner_bank_id.acc_number"/>
+                                    </td>
+
+                                    <td style="border-left:1px solid black;border-right:1px solid black;padding:2px;border-bottom:0px;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+
+                                    </td>
+                               </tr>
+                               <tr>
+<!--                                    <td style="visibility:hidden;">1</td>-->
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;padding:2px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                       Branch &amp; IFS Code:
+                                    </td>
+                                     <td style="border-bottom:1px solid black;padding:2px;font-weight:bold;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                         <t t-if="o.invoice_partner_bank_id.bank_id.street">
+                                             <t t-esc="o.invoice_partner_bank_id.bank_id.street"/>
+                                         </t>
+                                         <t t-if="o.invoice_partner_bank_id.bank_id.bic">
+                                               <t t-if="o.invoice_partner_bank_id.bank_id.street">
+                                                   &amp;
+                                               </t>
+
+                                             <t t-esc="o.invoice_partner_bank_id.bank_id.bic"/>
+                                         </t>
+
+                                    </td>
+                                      <td style="border-left:1px solid black;border-right:1px solid black;padding:2px;border-bottom:1px solid black;border-top:0px;font-size : 18px;font-family: 'Times New Roman';Text-align:left;">
+                                    Authorised Signatory
+                                    </td>
+                               </tr>
+
+
+
+                           </table>
+
+             </div>
+
+                 <br/>
+
              <table  class="fixed" style="font-family: 'Times New Roman';font-size : 18px;width:100%" >
                  <col style="width: 100%;" />
                  <tr style="border:1px solid black;border-collapse: collapse;">
