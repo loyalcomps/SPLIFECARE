@@ -4,6 +4,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.tools import float_is_zero
 from odoo import models, fields, api
 
+
 class account_GSTtax(models.Model):
     _name = 'account.gst.tax'
     _description = 'GST Tax'
@@ -20,50 +21,51 @@ class account_GSTtax(models.Model):
 
 
 class AccountMove(models.Model):
-    _inherit='account.move'
+    _inherit = 'account.move'
 
+    # @api.onchange('invoice_line_ids')
+    # def account_gst_onchange_invoice_line_ids(self):
 
-    @api.onchange('invoice_line_ids')
-    def account_gst_onchange_invoice_line_ids(self):
-        mon1 = []
-
-        for i in self:
-            if i.id:
-                self._cr.execute("DELETE FROM account_gst_tax WHERE move_id=%s", (i.id,))
-                # if self._cr.rowcount:
-                self.invalidate_cache()
-
-         # Generate one tax line per tax, however many invoice lines it's applied to
-
-        taxes_grouped = self.account_generate_tax()
-        gst_tax_lines = self.account_gst_tax_ids.browse([])
-        gst_val = {}
-
-        for place_of_supply, inv_tax_lines in taxes_grouped.items():  # invoice_gst_tax_lines.items():
-            s = 1
-            so_order = {
-                # 'move_id': inv_tax_lines[0] if inv_tax_lines[0] else 0,
-                'karkkidaka_kit_account': inv_tax_lines[0].id if inv_tax_lines[0].gst_report_accounts =='karkkidaka_kit_sale' else 0,
-                'cgst_tax': inv_tax_lines[1] if inv_tax_lines[1] else 0,
-                'sgst_tax': inv_tax_lines[2] if inv_tax_lines[2] else 0,
-                'kfc_tax': inv_tax_lines[3] if inv_tax_lines[3] else 0,
-                'registration_fee_account': inv_tax_lines[0].id if inv_tax_lines[0].gst_report_accounts == 'registration_fee' else 0,
-                'reg_cgst_tax': inv_tax_lines[6] if inv_tax_lines[6] else 0,
-                'reg_sgst_tax': inv_tax_lines[7] if inv_tax_lines[7] else 0,
-                'reg_kfc_tax': inv_tax_lines[8] if inv_tax_lines[8] else 0,
-
-            }
-            mon3 = (0, 0, so_order)
-            mon1.append(mon3)
-        self.update({
-
-            'account_gst_tax_ids': mon1
-        })
-        #     gst_tax_lines += gst_tax_lines.create(so_order)
+        # mon1 = []
+        # for i in self:
+        #     # self.write({'account_gst_tax_ids': [(2, c.id) for c in i.account_gst_tax_ids]})
+        #     # self.invalidate_cache()
+        #     if i.id:
+        #         move_id = i.id
+        #         self._cr.execute("DELETE FROM account_gst_tax WHERE move_id=%s", (move_id,))
+        #         # if self._cr.rowcount:
+        #         self.invalidate_cache()
         #
-        # self.account_gst_tax_ids = gst_tax_lines
-        s = 1
-        return
+        #  # Generate one tax line per tax, however many invoice lines it's applied to
+        #
+        # taxes_grouped = self.account_generate_tax()
+        # gst_tax_lines = self.account_gst_tax_ids.browse([])
+        # gst_val = {}
+        #
+        # for place_of_supply, inv_tax_lines in taxes_grouped.items():  # invoice_gst_tax_lines.items():
+        #     s = 1
+        #     so_order = {
+        #         # 'move_id': inv_tax_lines[0] if inv_tax_lines[0] else 0,
+        #         'karkkidaka_kit_account': inv_tax_lines[0].id if inv_tax_lines[0].gst_report_accounts =='karkkidaka_kit_sale' else 0,
+        #         'cgst_tax': inv_tax_lines[1] if inv_tax_lines[1] else 0,
+        #         'sgst_tax': inv_tax_lines[2] if inv_tax_lines[2] else 0,
+        #         'kfc_tax': inv_tax_lines[3] if inv_tax_lines[3] else 0,
+        #         'registration_fee_account': inv_tax_lines[0].id if inv_tax_lines[0].gst_report_accounts == 'registration_fee' else 0,
+        #         'reg_cgst_tax': inv_tax_lines[6] if inv_tax_lines[6] else 0,
+        #         'reg_sgst_tax': inv_tax_lines[7] if inv_tax_lines[7] else 0,
+        #         'reg_kfc_tax': inv_tax_lines[8] if inv_tax_lines[8] else 0,
+        #
+        #     }
+        #     mon3 = (0, 0, so_order)
+        #     mon1.append(mon3)
+        # self.update({
+        #
+        #     'account_gst_tax_ids': mon1
+        # })
+        # #     gst_tax_lines += gst_tax_lines.create(so_order)
+        # #
+        # # self.account_gst_tax_ids = gst_tax_lines
+        # return
 
     # @api.onchange('line_ids')
     def account_generate_tax(self):
@@ -160,26 +162,22 @@ class AccountMove(models.Model):
                 grouped_tax_lines[gst_account_id][9] += gstDict['re_csamt']
                 grouped_tax_lines[gst_account_id][10] += gstDict['re_iamt']
                 grouped_tax_lines[gst_account_id][11] = move_id
-
-
-
-
-
         return grouped_tax_lines
 
-
-    account_gst_tax_ids = fields.One2many("account.gst.tax", "move_id", string="Tax",)
-
+    account_gst_tax_ids = fields.One2many("account.gst.tax", "move_id", string="Tax", copy=True)
 
     def account_compute_taxes(self):
         """Function used in other module to compute the taxes on a fresh invoice created (onchanges did not applied)"""
         account_invoice_tax = self.env['account.gst.tax']
         ctx = dict(self._context)
+        mon1 = []
         for invoice in self:
             # Delete non-manual tax lines
-            if self.type not in ['out_refund','in_refund', 'out_receipt', 'in_receipt']:
-
+            if self.type in ['out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt']:
+            # if invoice.id:
                 self._cr.execute("DELETE FROM account_gst_tax WHERE move_id=%s", (invoice.id,))
+                # else:
+                #     self._cr.execute("DELETE FROM account_gst_tax WHERE move_id=%s", (invoice._origin.id,))
                 # if self._cr.rowcount:
                 self.invalidate_cache()
 
@@ -188,32 +186,76 @@ class AccountMove(models.Model):
 
                 # Create new tax lines
                 # if self.type not in ['out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt']:
-                for tax in tax_grouped.values():
-                    account_invoice_tax.create(tax)
-            else:
-                self.account_gst_onchange_invoice_line_ids()
+                # for tax in tax_grouped.values():
+                #     account_invoice_tax.create(tax)
+                for place_of_supply, inv_tax_lines in tax_grouped.items():  # invoice_gst_tax_lines.items():
+                    s = 1
+                    so_order = {
+                        # 'move_id': inv_tax_lines[0] if inv_tax_lines[0] else 0,
+                        'karkkidaka_kit_account': inv_tax_lines[0].id if inv_tax_lines[
+                                                                             0].gst_report_accounts == 'karkkidaka_kit_sale' else 0,
+                        'cgst_tax': inv_tax_lines[1] if inv_tax_lines[1] else 0,
+                        'sgst_tax': inv_tax_lines[2] if inv_tax_lines[2] else 0,
+                        'kfc_tax': inv_tax_lines[3] if inv_tax_lines[3] else 0,
+                        'registration_fee_account': inv_tax_lines[0].id if inv_tax_lines[
+                                                                               0].gst_report_accounts == 'registration_fee' else 0,
+                        'reg_cgst_tax': inv_tax_lines[6] if inv_tax_lines[6] else 0,
+                        'reg_sgst_tax': inv_tax_lines[7] if inv_tax_lines[7] else 0,
+                        'reg_kfc_tax': inv_tax_lines[8] if inv_tax_lines[8] else 0,
+
+                    }
+                    mon3 = (0, 0, so_order)
+                    mon1.append(mon3)
+                self.update({
+
+                    'account_gst_tax_ids': mon1
+                })
+            # else:
+            #     self.account_gst_onchange_invoice_line_ids()
 
         # dummy write on self to trigger recomputations
         return
         # return self.with_context(ctx).write({'invoice_line_ids': []})
 
-    @api.model
+    # @api.model
+    # def create(self, vals):
+    #     request = super(AccountMove, self).create(vals)
+    #
+    #     if any(line.tax_ids for line in request.invoice_line_ids) and not request.account_gst_tax_ids:
+    #         request.account_compute_taxes()
+    #         # request.account_gst_onchange_invoice_line_ids()
+    #     return request
+
+    # @api.model
+    # def write(self, vals):
+    #     request = super(AccountMove, self).write(vals)
+    #     # if 'invoice_line_ids' in vals:
+    #     #     if any(line.tax_ids and line.account_id.gst_report == True for line in self.invoice_line_ids):
+    #     #         self.account_compute_taxes()
+    #
+    #     for taxes in self:
+    #         if any(line.tax_ids for line in taxes.invoice_line_ids) and not taxes.account_gst_tax_ids:
+    #             taxes.account_compute_taxes()
+    #             # taxes.account_gst_onchange_invoice_line_ids()
+    #     return request
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
     def create(self, vals):
-        request=super(AccountMove, self).create(vals)
-
-        if any(line.tax_ids for line in request.invoice_line_ids) and not request.account_gst_tax_ids:
-            request.account_compute_taxes()
+        request = super(AccountMoveLine, self).create(vals)
+        for line in request:
+            if line.account_id.gst_report:
+                line.move_id.account_compute_taxes()
         return request
 
-    @api.model
     def write(self, vals):
-        request = super(AccountMove, self).write(vals)
-
-        for taxes in self:
-            if any(line.tax_ids for line in taxes.invoice_line_ids) and not taxes.account_gst_tax_ids:
-                taxes.account_compute_taxes()
+        request = super(AccountMoveLine, self).write(vals)
+        for line in self:
+            if line.account_id.gst_report:
+                line.move_id.account_compute_taxes()
         return request
-
 
 
 class Account_account(models.Model):
@@ -230,7 +272,7 @@ class Account_account(models.Model):
         ('lab_test_revenue', 'Lab Test Revenue'),
         ('karkkidaka_kit_sale', 'Karkkidaka Kit Sale'),
         ('registration_fee', 'Registration Fee @18%')
-    ], string='GST Report', tracking=True,
+    ], string='GST Report Account', tracking=True,
         )
 
     gst_report = fields.Boolean(default=False,store=True,string="GST Report")
