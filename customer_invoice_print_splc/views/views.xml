@@ -202,11 +202,13 @@
                                 <t t-set="index_val" t-value="0"/>
                                 <tbody>
                                     <tr style="border-right:1px solid black;border-left:1px solid black;border-collapse: collapse;" t-foreach="o.invoice_line_ids" t-as="l">
-                                        <t t-if="(l.account_id == o.invoice_cash_rounding_id.account_id)">
+                                        <t t-if="(l.account_id == o.invoice_cash_rounding_id.account_id) or l.account_id.name=='Round Off'">
                                             <t t-set="roundoff" t-value="roundoff+l.price_total"/>
                                         </t>
 
-                                        <t t-if="l.account_id != o.invoice_cash_rounding_id.account_id">
+                                        <t t-if="(l.account_id != o.invoice_cash_rounding_id.account_id)">
+                                     <t t-if="l.account_id.name!='Round Off'">
+
 
 
 <!--                                         <t t-if="l.account_id.name!='Round Off'">-->
@@ -226,6 +228,7 @@
                                            <t t-esc="'{0:.2f}'.format(float(l.price_subtotal))"/>
                                         </td>
                                          </t>
+                                        </t>
 
 <!--                                        <td align="center" style="padding:10px;">-->
 <!--                                            <t t-esc="'{0:.3f}'.format(float(l.price_unit))"/>-->
